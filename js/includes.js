@@ -9,12 +9,16 @@
   const p = body.getAttribute("data-prefix") || "";
 
   /* Favicon (injected so every page gets it without editing each <head>) */
-  if (!document.querySelector('link[rel="icon"]')) {
+  if (!document.querySelector('link[rel="icon"][type="image/png"]')) {
     const fav = document.createElement("link");
     fav.rel = "icon";
-    fav.type = "image/svg+xml";
-    fav.href = p + "assets/favicon.svg";
+    fav.type = "image/png";
+    fav.href = p + "assets/favicon.png?v=2";
     document.head.appendChild(fav);
+    const apple = document.createElement("link");
+    apple.rel = "apple-touch-icon";
+    apple.href = p + "assets/favicon.png?v=2";
+    document.head.appendChild(apple);
   }
 
   const navItems = [
