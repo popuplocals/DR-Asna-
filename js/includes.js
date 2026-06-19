@@ -47,6 +47,37 @@
     document.head.appendChild(ld);
   }
 
+  /* Per-page schema (MedicalWebPage + Breadcrumb + FAQ) built from the page's own content */
+  if (!document.getElementById("ld-page")) {
+    const pageUrl = "https://asnanaqvi.com" + location.pathname.replace(/index\.html$/, "");
+    const graph = [{
+      "@type": "MedicalWebPage", "url": pageUrl, "name": document.title,
+      "about": { "@id": "https://asnanaqvi.com/#physician" },
+      "reviewedBy": { "@id": "https://asnanaqvi.com/#physician" },
+      "lastReviewed": "2026-06-18", "inLanguage": "en-IN"
+    }];
+    const bc = document.querySelector(".breadcrumb");
+    if (bc) {
+      const links = Array.from(bc.querySelectorAll("a"));
+      const parts = bc.textContent.split("/").map(function (s) { return s.trim(); }).filter(Boolean);
+      const items = links.map(function (a, i) {
+        return { "@type": "ListItem", "position": i + 1, "name": a.textContent.trim(), "item": a.href };
+      });
+      items.push({ "@type": "ListItem", "position": items.length + 1, "name": parts[parts.length - 1] || document.title, "item": pageUrl });
+      graph.push({ "@type": "BreadcrumbList", "itemListElement": items });
+    }
+    const faqs = Array.from(document.querySelectorAll(".svc-faq")).map(function (d) {
+      const q = d.querySelector("summary"), a = d.querySelector("p");
+      return q && a ? { "@type": "Question", "name": q.textContent.trim(), "acceptedAnswer": { "@type": "Answer", "text": a.textContent.trim() } } : null;
+    }).filter(Boolean);
+    if (faqs.length) graph.push({ "@type": "FAQPage", "mainEntity": faqs });
+    const lp = document.createElement("script");
+    lp.type = "application/ld+json";
+    lp.id = "ld-page";
+    lp.textContent = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+    document.head.appendChild(lp);
+  }
+
   const navItems = [
     { href: "index.html", label: "Home", key: "home" },
     { href: "about.html", label: "About Doctor", key: "about" },
