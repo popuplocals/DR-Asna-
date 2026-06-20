@@ -1,0 +1,88 @@
+/* ============================================================
+   Premium pass — homepage preview (loads AFTER styles.css)
+   Elevates typography, spacing, gold accents and shadows without
+   touching the markup. To roll out site-wide later: add the
+   Fraunces font <link> + this stylesheet <link> to the other
+   pages (or move both into js/includes.js).
+   ============================================================ */
+
+:root {
+  --font-display: "Fraunces", "Poppins", Georgia, serif;
+  --gold-line: #C9952E;
+  --gold-tint: rgba(201, 149, 46, 0.16);
+  --lux: 0 24px 60px -28px rgba(11, 95, 102, 0.36);
+  --lux-soft: 0 16px 38px -24px rgba(11, 95, 102, 0.26);
+}
+
+/* ---------- Elegant serif headings ---------- */
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.004em; }
+h1 { font-weight: 600; font-size: clamp(2.15rem, 4.4vw, 3.5rem); line-height: 1.12; }
+h2 { font-weight: 500; font-size: clamp(1.7rem, 3.1vw, 2.5rem); line-height: 1.16; }
+h3 { font-weight: 600; font-size: 1.3rem; }
+
+/* ---------- Eyebrows: gold, with a hairline ---------- */
+.section-head .eyebrow { color: var(--gold-line); }
+.section-head .eyebrow::after {
+  content: ""; display: block; width: 44px; height: 2px; margin: 14px auto 0;
+  background: var(--gold-line); border-radius: 2px;
+}
+
+/* ---------- Generous breathing room ---------- */
+.section { padding: 104px 0; }
+.section-head { margin-bottom: 56px; }
+
+/* ---------- Hero ---------- */
+.hero h1 { margin-bottom: 16px; }
+.hero h1::after {
+  content: ""; display: block; width: 66px; height: 3px; margin-top: 18px;
+  background: var(--gold-line); border-radius: 3px;
+}
+.hero .hero-title-bar { font-weight: 500; }
+.hero ul.credentials i { color: var(--gold-line); }
+
+/* ---------- Buttons: refined weight + soft depth ---------- */
+.btn { letter-spacing: .012em; padding: 14px 30px; box-shadow: var(--lux-soft); }
+.btn--primary:hover { box-shadow: var(--lux); }
+.btn--outline { box-shadow: none; }
+.btn--outline:hover { box-shadow: var(--lux-soft); }
+
+/* ---------- Why-choose cards: gold top rule + layered shadow ---------- */
+.card { border-top: 3px solid var(--gold-line); box-shadow: var(--lux-soft); }
+.card:hover { box-shadow: var(--lux); }
+.card .card-icon { color: var(--gold-line); }
+
+/* ---------- Stats band: editorial numerals + gold rings ---------- */
+.stats-band .stat-num { font-weight: 600; letter-spacing: 0; }
+.stats-band .stat > i {
+  color: var(--gold-line);
+  background: rgba(201, 149, 46, 0.14);
+  border-color: rgba(201, 149, 46, 0.5);
+}
+.stats-band .stat:hover > i { background: rgba(201, 149, 46, 0.24); }
+
+/* ---------- Trust strip: serif figures + hairline dividers ---------- */
+.trust-item .num { font-weight: 600; }
+@media (min-width: 721px) {
+  .trust-item + .trust-item { border-left: 1px solid var(--gold-tint); }
+}
+
+/* ---------- Testimonials: editorial, layered ---------- */
+.tcard {
+  border-color: var(--gold-tint); border-radius: 18px; box-shadow: var(--lux-soft);
+  transition: box-shadow .35s ease, transform .35s ease;
+}
+.tcard:hover { box-shadow: var(--lux); transform: translateY(-3px); }
+.tcard blockquote {
+  font-family: var(--font-display); font-style: italic; font-weight: 400;
+  font-size: 1.1rem; line-height: 1.5; color: var(--accent-deep);
+}
+.tcard-stars { font-size: 1.05rem; }
+
+/* ---------- Warmer alternating panel ---------- */
+.section--cream { background: #F7F4EF; }
+
+/* ---------- Mobile: keep spacing sensible ---------- */
+@media (max-width: 720px) {
+  .section { padding: 64px 0; }
+  .section-head { margin-bottom: 40px; }
+}
