@@ -29,13 +29,40 @@
     can.href = "https://asnanaqvi.com" + (path || "/");
     document.head.appendChild(can);
   }
-  [["geo.position", "26.798121;80.901521"], ["ICBM", "26.798121, 80.901521"]].forEach(function (g) {
+  [["geo.position", "26.798121;80.901521"], ["ICBM", "26.798121, 80.901521"], ["geo.region", "IN-UP"], ["geo.placename", "Lucknow"]].forEach(function (g) {
     if (!document.querySelector('meta[name="' + g[0] + '"]')) {
       const m = document.createElement("meta");
       m.name = g[0]; m.content = g[1];
       document.head.appendChild(m);
     }
   });
+  /* robots + Open Graph + Twitter — added only if the page lacks them
+     (the homepage hardcodes its own; inner pages inherit the full set here) */
+  (function () {
+    var url = "https://asnanaqvi.com" + (location.pathname.replace(/index\.html$/, "") || "/");
+    var dEl = document.querySelector('meta[name="description"]');
+    var desc = dEl ? dEl.getAttribute("content") : "";
+    var ttl = document.title;
+    var img = "https://asnanaqvi.com/assets/about-doctor.png";
+    function add(attr, key, val) {
+      if (!val || document.querySelector("meta[" + attr + '="' + key + '"]')) return;
+      var m = document.createElement("meta");
+      m.setAttribute(attr, key); m.setAttribute("content", val);
+      document.head.appendChild(m);
+    }
+    add("name", "robots", "index, follow, max-image-preview:large");
+    add("property", "og:type", "website");
+    add("property", "og:locale", "en_IN");
+    add("property", "og:site_name", "Dr. Asna Zehra Naqvi");
+    add("property", "og:title", ttl);
+    add("property", "og:description", desc);
+    add("property", "og:url", url);
+    add("property", "og:image", img);
+    add("name", "twitter:card", "summary_large_image");
+    add("name", "twitter:title", ttl);
+    add("name", "twitter:description", desc);
+    add("name", "twitter:image", img);
+  })();
   if (!document.getElementById("ld-global")) {
     const ld = document.createElement("script");
     ld.type = "application/ld+json";
