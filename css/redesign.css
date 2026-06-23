@@ -96,7 +96,7 @@ h1, h2 { letter-spacing: -0.012em; }
     .form-card {
       animation: luxRise .9s var(--ease-out) both;
       animation-timeline: view();
-      animation-range: entry 0% cover 20%;
+      animation-range: entry 2% cover 30%;
     }
     @keyframes luxRise {
       from { opacity: 0; transform: translateY(28px); }
@@ -173,3 +173,12 @@ body {
   mix-blend-mode: multiply; opacity: 0.5;
 }
 .section--cream > .container { position: relative; z-index: 1; }
+
+/* ============================================================
+   Smooth scroll (Lenis) — lets Lenis drive the scroll cleanly.
+   Desktop wheel glides; mobile keeps native touch scrolling.
+   ============================================================ */
+html.lenis, html.lenis body { height: auto; }
+html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }

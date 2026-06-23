@@ -42,9 +42,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="css/styles.css?v=2026061906" />
-  <link rel="stylesheet" href="css/premium.css?v=2026061906" />
-  <link rel="stylesheet" href="css/redesign.css?v=2026061906" />
+  <link rel="stylesheet" href="css/styles.css?v=2026061908" />
+  <link rel="stylesheet" href="css/premium.css?v=2026061908" />
+  <link rel="stylesheet" href="css/redesign.css?v=2026061908" />
 </head>
 <body data-page="home" data-prefix="">
   <script>(function(){try{if(sessionStorage.getItem('introSeen')||matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('intro-skip');}}catch(e){}})();</script>
@@ -52,7 +52,7 @@
   <!-- ===== Intro loader (homepage, once per session) ===== -->
   <div id="intro-loader" aria-hidden="true">
     <div class="intro-inner">
-      <img src="assets/intro-mother-child.png?v=2026061906" alt="" class="intro-art" width="480" height="270" />
+      <img src="assets/intro-mother-child.png?v=2026061908" alt="" class="intro-art" width="480" height="270" />
       <p class="intro-name">Dr. Asna Zehra Naqvi</p>
       <p class="intro-sub">Obstetrician &amp; Gynaecologist</p>
     </div>
@@ -488,8 +488,8 @@
   <!-- ===== Footer + floating buttons (injected) ===== -->
   <div id="site-footer-mount"></div>
 
-  <script src="js/includes.js?v=2026061906"></script>
-  <script src="js/main.js?v=2026061906"></script>
+  <script src="js/includes.js?v=2026061908"></script>
+  <script src="js/main.js?v=2026061908"></script>
   <script>
   (function () {
     var el = document.getElementById('intro-loader');
@@ -505,6 +505,36 @@
     }
     var t = setTimeout(dismiss, 3200);
     el.addEventListener('click', dismiss);
+  })();
+  </script>
+
+  <!-- Smooth scroll (Lenis) — desktop wheel glide; native touch on mobile; reduced-motion-aware -->
+  <script>
+  (function () {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js';
+    s.onload = function () {
+      if (typeof Lenis === 'undefined') return;
+      var lenis = new Lenis({
+        duration: 1.15,
+        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        smoothWheel: true
+      });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest('a[href^="#"]');
+        if (!a) return;
+        var id = a.getAttribute('href');
+        if (id.length > 1 && document.querySelector(id)) {
+          e.preventDefault();
+          lenis.scrollTo(id, { offset: -90 });
+        }
+      });
+      window.__lenis = lenis;
+    };
+    document.head.appendChild(s);
   })();
   </script>
 </body>
