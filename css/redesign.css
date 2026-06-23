@@ -120,3 +120,56 @@ h1, h2 { letter-spacing: -0.012em; }
   background: var(--gold-line); transition: width .4s var(--ease-out);
 }
 .card-link:hover::after { width: 100%; }
+
+/* ============================================================
+   Background interest — ambient warm-light glows, soft curved
+   dividers, and a faint gold mother-and-child watermark.
+   Pure CSS (+ existing intro art); subtle = depth, not busy.
+   No layout shift, no extra requests beyond the cached art.
+   ============================================================ */
+
+/* Ambient glows across the page (show through the plain sections) */
+body {
+  background:
+    radial-gradient(42% 30% at 86% 6%,  rgba(201, 139, 134, 0.12), transparent 62%),
+    radial-gradient(40% 26% at 8% 34%,  rgba(18, 110, 107, 0.06), transparent 62%),
+    radial-gradient(46% 30% at 92% 66%, rgba(194, 151, 74, 0.07), transparent 62%),
+    radial-gradient(42% 28% at 10% 90%, rgba(201, 139, 134, 0.07), transparent 62%),
+    var(--bg);
+  background-repeat: no-repeat;
+}
+
+/* Glows layered into the warm panels */
+.section--cream {
+  background:
+    radial-gradient(50% 62% at 86% 8%,  rgba(194, 151, 74, 0.13), transparent 60%),
+    radial-gradient(48% 58% at 10% 96%, rgba(18, 110, 107, 0.06), transparent 60%),
+    var(--panel-cream);
+}
+.section--lavender {
+  background:
+    radial-gradient(50% 62% at 12% 6%,  rgba(194, 151, 74, 0.10), transparent 60%),
+    radial-gradient(48% 58% at 90% 98%, rgba(18, 110, 107, 0.06), transparent 60%),
+    var(--panel-lavender);
+}
+
+/* Soft curved divider — gentle domed top on the warm panels */
+.section--lavender,
+.section--cream {
+  position: relative;
+  z-index: 1;
+  border-top-left-radius: 50% 32px;
+  border-top-right-radius: 50% 32px;
+  margin-top: -20px;
+}
+
+/* Faint gold mother-and-child watermark on the warm panels
+   (multiply drops the art's light background, leaving the gold line) */
+.section--cream { overflow: hidden; }
+.section--cream::after {
+  content: ""; position: absolute; right: -8px; bottom: -16px;
+  width: 360px; height: 280px; pointer-events: none; z-index: 0;
+  background: url("../assets/intro-mother-child.png") center / contain no-repeat;
+  mix-blend-mode: multiply; opacity: 0.5;
+}
+.section--cream > .container { position: relative; z-index: 1; }
