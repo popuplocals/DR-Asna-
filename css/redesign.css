@@ -75,3 +75,48 @@ h1, h2 { letter-spacing: -0.012em; }
 
 /* Eyebrow + gold hairline already champagne via --gold-line */
 .section-head .eyebrow { color: var(--gold-line); }
+
+/* ============================================================
+   Motion — elegant, GPU-smooth, reduced-motion-aware, zero
+   layout shift. Scroll reveals use CSS view-timeline (no JS);
+   they degrade gracefully to static where unsupported, so the
+   document's Core Web Vitals rules stay intact (no CLS/INP cost).
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .section-head,
+    .about-grid > div,
+    .location-block,
+    .svc-tabs,
+    .trust-item,
+    .card,
+    .tcard,
+    .cta-banner,
+    .faq-item,
+    .form-card {
+      animation: luxRise .9s var(--ease-out) both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 20%;
+    }
+    @keyframes luxRise {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+
+  /* Hero headline: gold underline draws itself in on load */
+  .hero h1::after { width: 0; animation: luxDraw 1s var(--ease-out) .55s forwards; }
+  @keyframes luxDraw { from { width: 0; } to { width: 66px; } }
+}
+
+/* Hover micro-interactions (subtle, transform/opacity only) */
+.svc-media { overflow: hidden; }
+.svc-media img { transition: transform .6s var(--ease-out); }
+.svc-panel:hover .svc-media img { transform: scale(1.06); }
+
+.card-link { position: relative; padding-bottom: 3px; }
+.card-link::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 1.5px; width: 0;
+  background: var(--gold-line); transition: width .4s var(--ease-out);
+}
+.card-link:hover::after { width: 100%; }
