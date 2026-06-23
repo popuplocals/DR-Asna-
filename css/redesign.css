@@ -202,6 +202,20 @@ body {
 }
 .section--cream > .container { position: relative; z-index: 1; }
 
+/* Signature layered wave — the ivory hero flows into the deep-teal
+   stats band in soft sage + ivory waves (Endura-style). */
+.stats-band { position: relative; }
+.stats-band > .container { position: relative; z-index: 1; padding-top: 78px; }
+.stats-band::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 66px;
+  background: url("../assets/wave-stats.svg") top center / 100% 100% no-repeat;
+  z-index: 0; pointer-events: none;
+}
+@media (max-width: 720px) {
+  .stats-band > .container { padding-top: 56px; }
+  .stats-band::before { height: 44px; }
+}
+
 /* ============================================================
    Smooth scroll (Lenis) — lets Lenis drive the scroll cleanly.
    Desktop wheel glides; mobile keeps native touch scrolling.
