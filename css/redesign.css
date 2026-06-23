@@ -1,0 +1,77 @@
+/* ============================================================
+   SOFT LUXE redesign — homepage preview (loads AFTER premium.css)
+   Warm spa-luxury re-skin: warmer ivory base, deeper teal,
+   softer blush, champagne gold, Mulish body + smoother motion.
+   Re-skins through the design tokens so it's reversible; roll out
+   site-wide later by adding the Mulish font + this <link> elsewhere.
+   ============================================================ */
+
+:root {
+  /* --- Soft Luxe palette --- */
+  --bg: #FBF8F3;             /* warm ivory page */
+  --text: #2B2A28;           /* soft charcoal */
+  --muted: #6E665F;          /* warm grey */
+  --primary: #126E6B;        /* deep teal */
+  --primary-light: #4E938F;
+  --accent-deep: #0C4F4C;    /* darker teal — headings / strong */
+  --dark-teal: #0C4F4C;
+  --navy: #126E6B;
+  --soft-aqua: #BFD8D6;
+  --mist: #DDE7E5;
+  --baby-pink: #C98B86;      /* dusty blush — CTA */
+  --soft-pink: #DDB4AF;
+  --blush-pink: #F1E4DF;
+  --panel-lavender: #F2E7E1; /* warm blush panel */
+  --panel-cream: #F4EEE4;    /* warm ivory panel */
+  --card-bg: #FFFFFF;
+  --gold: #C2974A;           /* champagne gold */
+  --gold-line: #C2974A;
+  --gold-tint: rgba(194, 151, 74, 0.16);
+  --green: #2F9E6E;
+  --border: #E7DFD4;         /* warm border */
+
+  /* --- Warmer, softer depth --- */
+  --shadow: 0 18px 44px -22px rgba(43, 42, 40, 0.22);
+  --shadow-soft: 0 12px 30px -18px rgba(43, 42, 40, 0.16);
+  --lux: 0 30px 72px -34px rgba(18, 110, 107, 0.30);
+  --lux-soft: 0 18px 44px -26px rgba(18, 110, 107, 0.20);
+
+  /* --- Body font: Mulish (warm, clean) --- */
+  --font-body: "Mulish", "DM Sans", system-ui, -apple-system, sans-serif;
+
+  /* --- Smooth, refined easing --- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Warm page + new body font */
+body { background: var(--bg); color: var(--text); font-family: var(--font-body); }
+
+/* Warm panels (override premium.css hardcoded cream) */
+.section--cream { background: var(--panel-cream); }
+.section--lavender { background: var(--panel-lavender); }
+
+/* Smoother interactions everywhere */
+a, button, .btn, .card, .svc-tab, .tcard, .reel-card, .service-photo, .stat > i {
+  transition-timing-function: var(--ease-out);
+}
+
+/* Buttons: blush -> deep teal on hover, smooth depth */
+.btn { transition: background-color .3s var(--ease-out), color .3s var(--ease-out),
+                   box-shadow .4s var(--ease-out), transform .4s var(--ease-out); }
+.btn--primary { background: var(--baby-pink); color: #fff; }
+.btn--primary:hover { background: var(--accent-deep); color: #fff; transform: translateY(-2px); }
+.btn--outline:hover { transform: translateY(-2px); }
+
+/* Crisp white cards on the warm ground, with a soft lift */
+.card, .tcard { background: #fff; }
+.card:hover { transform: translateY(-6px); }
+
+/* Gentler, slower hero float for an unhurried feel */
+.hero-photo img, .hero-photo .photo-placeholder { animation-duration: 5.5s; }
+
+/* Headings: a touch tighter for editorial elegance */
+h1, h2 { letter-spacing: -0.012em; }
+
+/* Eyebrow + gold hairline already champagne via --gold-line */
+.section-head .eyebrow { color: var(--gold-line); }
