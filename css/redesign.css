@@ -1,64 +1,70 @@
 /* ============================================================
-   SOFT LUXE redesign — homepage preview (loads AFTER premium.css)
-   Warm spa-luxury re-skin: warmer ivory base, deeper teal,
-   softer blush, champagne gold, Mulish body + smoother motion.
-   Re-skins through the design tokens so it's reversible; roll out
-   site-wide later by adding the Mulish font + this <link> elsewhere.
+   CLAUDE DESIGN brief — palette + fonts + section rules
+   Implements the brief verbatim:
+     Deep Teal  #0F6B6E (primary, buttons, headings, icons)
+     Blush Pink #F6C1C7 (decorative shapes, icon tiles, soft blocks)
+     Warm Gold  #C6A75E (premium accents, dividers, stars, labels)
+     Ivory      #F9F6F2 (page background)
+     Charcoal   #333333 (body text)
+     White      #FFFFFF (cards)
+     Headings: Playfair Display
+     Body:     Montserrat
+   Loads AFTER premium.css. Reversible (one <link>).
+   Existing SEO, schema, intro animation, and content stay intact.
    ============================================================ */
 
 :root {
-  /* --- Soft Luxe palette --- */
-  --bg: #FBF8F3;             /* warm ivory page */
-  --text: #2B2A28;           /* soft charcoal */
-  --muted: #6E665F;          /* warm grey */
-  --primary: #126E6B;        /* deep teal */
-  --primary-light: #4E938F;
-  --accent-deep: #0C4F4C;    /* darker teal — headings / strong */
-  --dark-teal: #0C4F4C;
-  --navy: #126E6B;
-  --soft-aqua: #BFD8D6;
+  /* --- Claude Design palette --- */
+  --bg: #F9F6F2;             /* ivory page */
+  --text: #333333;           /* charcoal */
+  --muted: #6B6B6B;
+  --primary: #0F6B6E;        /* deep teal */
+  --primary-light: #2A8A8D;
+  --accent-deep: #084D50;
+  --dark-teal: #084D50;
+  --navy: #0F6B6E;
+  --soft-aqua: #BFD9D9;
   --mist: #DDE7E5;
-  --baby-pink: #C98B86;      /* dusty blush — CTA */
-  --soft-pink: #DDB4AF;
-  --blush-pink: #F1E4DF;
-  --panel-lavender: #F2E7E1; /* warm blush panel */
-  --panel-cream: #F4EEE4;    /* warm ivory panel */
+  --baby-pink: #F6C1C7;      /* soft blush — decorative, NOT CTA */
+  --soft-pink: #FAD6DA;
+  --blush-pink: #FDEAEC;
+  --panel-lavender: #FDEAEC; /* very soft blush panel */
+  --panel-cream: #F4EFE5;    /* warm ivory panel */
   --card-bg: #FFFFFF;
-  --gold: #C2974A;           /* champagne gold */
-  --gold-line: #C2974A;
-  --gold-tint: rgba(194, 151, 74, 0.16);
+  --gold: #C6A75E;
+  --gold-line: #C6A75E;
+  --gold-tint: rgba(198, 167, 94, 0.18);
   --green: #2F9E6E;
-  --border: #E7DFD4;         /* warm border */
+  --border: #E7E0D2;
 
-  /* --- Warmer, softer depth --- */
-  --shadow: 0 18px 44px -22px rgba(43, 42, 40, 0.22);
-  --shadow-soft: 0 12px 30px -18px rgba(43, 42, 40, 0.16);
-  --lux: 0 30px 72px -34px rgba(18, 110, 107, 0.30);
-  --lux-soft: 0 18px 44px -26px rgba(18, 110, 107, 0.20);
+  /* --- Soft, premium shadows --- */
+  --shadow: 0 18px 44px -22px rgba(51, 51, 51, 0.22);
+  --shadow-soft: 0 12px 30px -18px rgba(51, 51, 51, 0.14);
+  --lux: 0 30px 72px -34px rgba(15, 107, 110, 0.28);
+  --lux-soft: 0 18px 44px -26px rgba(15, 107, 110, 0.18);
 
-  /* --- Body font: Mulish (warm, clean) --- */
-  --font-body: "Mulish", "DM Sans", system-ui, -apple-system, sans-serif;
+  /* --- Fonts: Playfair Display (display) + Montserrat (body) --- */
+  --font-display: "Playfair Display", "Fraunces", Georgia, serif;
+  --font-body: "Montserrat", "Mulish", system-ui, -apple-system, sans-serif;
 
   /* --- Smooth, refined easing --- */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Warm page + new body font */
 body { background: var(--bg); color: var(--text); font-family: var(--font-body); }
+h1, h2, h3, h4 { font-family: var(--font-display); color: var(--accent-deep); }
+h1 { letter-spacing: -0.005em; font-weight: 600; }
+h2 { letter-spacing: -0.004em; font-weight: 600; }
 
-/* Warm panels (override premium.css hardcoded cream) */
 .section--cream { background: var(--panel-cream); }
 .section--lavender { background: var(--panel-lavender); }
 
-/* Smoother interactions everywhere */
 a, button, .btn, .card, .svc-tab, .tcard, .reel-card, .service-photo, .stat > i {
   transition-timing-function: var(--ease-out);
 }
 
-/* Premium buttons — clean, refined, restrained (no gimmick animation).
-   A smooth single-colour fill on hover, a soft colour-matched shadow,
-   and a gentle lift. */
+/* ===== CTAs (per brief: deep teal primary with white text) ===== */
 .btn {
   letter-spacing: .02em;
   transition: background-color .4s var(--ease-out),
@@ -67,49 +73,59 @@ a, button, .btn, .card, .svc-tab, .tcard, .reel-card, .service-photo, .stat > i 
               transform .45s var(--ease-out);
 }
 .btn--primary {
-  background: var(--baby-pink); color: #fff;
-  box-shadow: 0 12px 26px -14px rgba(201, 139, 134, 0.7);
+  background: var(--primary); color: #fff;
+  box-shadow: 0 12px 26px -14px rgba(15, 107, 110, 0.55);
 }
 .btn--primary:hover {
   background: var(--accent-deep); color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 20px 40px -18px rgba(12, 79, 76, 0.5);
+  box-shadow: 0 20px 40px -18px rgba(15, 107, 110, 0.45);
 }
 .btn--ghost {
-  background: #fff; color: var(--accent-deep);
+  background: #fff; color: var(--primary);
   box-shadow: var(--lux-soft);
 }
 .btn--ghost:hover {
-  background: var(--accent-deep); color: #fff;
+  background: var(--primary); color: #fff;
   transform: translateY(-2px); box-shadow: var(--lux);
 }
+/* Secondary (gold-bordered, per brief) */
 .btn--outline {
-  background: transparent; border-color: var(--primary); color: var(--primary);
+  background: transparent; border-color: var(--gold-line); color: var(--primary);
 }
 .btn--outline:hover {
-  background: var(--primary); color: #fff;
+  background: var(--primary); color: #fff; border-color: var(--primary);
   transform: translateY(-2px); box-shadow: var(--lux-soft);
 }
 
-/* Crisp white cards on the warm ground, with a soft lift */
+/* ===== Cards on ivory: clean white + gold accent line + lift ===== */
 .card, .tcard { background: #fff; }
 .card:hover { transform: translateY(-6px); }
 
-/* Gentler, slower hero float for an unhurried feel */
+/* Hero hairline (carried over from premium.css; stays gold) */
+.hero h1::after { background: var(--gold-line); }
+.section-head .eyebrow { color: var(--gold-line); }
+.section-head .eyebrow::after { background: var(--gold-line); }
+
+/* Service-page FAQ accordion chevron stays teal/gold */
+.svc-faq > summary::after { color: var(--primary); }
+
+/* Hover micro-interactions (kept from previous pass) */
+.svc-media { overflow: hidden; }
+.svc-media img { transition: transform .6s var(--ease-out); }
+.svc-panel:hover .svc-media img { transform: scale(1.06); }
+
+.card-link { position: relative; padding-bottom: 3px; }
+.card-link::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 1.5px; width: 0;
+  background: var(--gold-line); transition: width .4s var(--ease-out);
+}
+.card-link:hover::after { width: 100%; }
+
+/* Hero photo float — gentler */
 .hero-photo img, .hero-photo .photo-placeholder { animation-duration: 5.5s; }
 
-/* Headings: a touch tighter for editorial elegance */
-h1, h2 { letter-spacing: -0.012em; }
-
-/* Eyebrow + gold hairline already champagne via --gold-line */
-.section-head .eyebrow { color: var(--gold-line); }
-
-/* ============================================================
-   Motion — elegant, GPU-smooth, reduced-motion-aware, zero
-   layout shift. Scroll reveals use CSS view-timeline (no JS);
-   they degrade gracefully to static where unsupported, so the
-   document's Core Web Vitals rules stay intact (no CLS/INP cost).
-   ============================================================ */
+/* ===== Scroll reveals (CSS view-timeline; reduced-motion-safe) ===== */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .section-head,
@@ -131,95 +147,32 @@ h1, h2 { letter-spacing: -0.012em; }
       to   { opacity: 1; transform: none; }
     }
   }
-
-  /* Hero headline: gold underline draws itself in on load */
-  .hero h1::after { width: 0; animation: luxDraw 1s var(--ease-out) .55s forwards; }
-  @keyframes luxDraw { from { width: 0; } to { width: 66px; } }
 }
 
-/* Hover micro-interactions (subtle, transform/opacity only) */
-.svc-media { overflow: hidden; }
-.svc-media img { transition: transform .6s var(--ease-out); }
-.svc-panel:hover .svc-media img { transform: scale(1.06); }
-
-.card-link { position: relative; padding-bottom: 3px; }
-.card-link::after {
-  content: ""; position: absolute; left: 0; bottom: 0; height: 1.5px; width: 0;
-  background: var(--gold-line); transition: width .4s var(--ease-out);
-}
-.card-link:hover::after { width: 100%; }
-
-/* ============================================================
-   Background interest — ambient warm-light glows, soft curved
-   dividers, and a faint gold mother-and-child watermark.
-   Pure CSS (+ existing intro art); subtle = depth, not busy.
-   No layout shift, no extra requests beyond the cached art.
-   ============================================================ */
-
-/* Ambient glows across the page (show through the plain sections) */
+/* ===== Soft ambient warm-light glows (depth, not busy) ===== */
 body {
   background:
-    radial-gradient(42% 30% at 86% 6%,  rgba(201, 139, 134, 0.12), transparent 62%),
-    radial-gradient(40% 26% at 8% 34%,  rgba(18, 110, 107, 0.06), transparent 62%),
-    radial-gradient(46% 30% at 92% 66%, rgba(194, 151, 74, 0.07), transparent 62%),
-    radial-gradient(42% 28% at 10% 90%, rgba(201, 139, 134, 0.07), transparent 62%),
+    radial-gradient(42% 30% at 86% 6%,  rgba(246, 193, 199, 0.16), transparent 62%),
+    radial-gradient(40% 26% at 8% 34%,  rgba(15, 107, 110, 0.05), transparent 62%),
+    radial-gradient(46% 30% at 92% 66%, rgba(198, 167, 94, 0.07), transparent 62%),
+    radial-gradient(42% 28% at 10% 90%, rgba(246, 193, 199, 0.10), transparent 62%),
     var(--bg);
   background-repeat: no-repeat;
 }
-
-/* Glows layered into the warm panels */
 .section--cream {
   background:
-    radial-gradient(50% 62% at 86% 8%,  rgba(194, 151, 74, 0.13), transparent 60%),
-    radial-gradient(48% 58% at 10% 96%, rgba(18, 110, 107, 0.06), transparent 60%),
+    radial-gradient(50% 62% at 86% 8%,  rgba(198, 167, 94, 0.12), transparent 60%),
+    radial-gradient(48% 58% at 10% 96%, rgba(15, 107, 110, 0.05), transparent 60%),
     var(--panel-cream);
 }
 .section--lavender {
   background:
-    radial-gradient(50% 62% at 12% 6%,  rgba(194, 151, 74, 0.10), transparent 60%),
-    radial-gradient(48% 58% at 90% 98%, rgba(18, 110, 107, 0.06), transparent 60%),
+    radial-gradient(50% 62% at 12% 6%,  rgba(198, 167, 94, 0.10), transparent 60%),
+    radial-gradient(48% 58% at 90% 98%, rgba(15, 107, 110, 0.05), transparent 60%),
     var(--panel-lavender);
 }
 
-/* Soft curved divider — gentle domed top on the warm panels */
-.section--lavender,
-.section--cream {
-  position: relative;
-  z-index: 1;
-  border-top-left-radius: 50% 32px;
-  border-top-right-radius: 50% 32px;
-  margin-top: -20px;
-}
-
-/* Faint gold mother-and-child watermark on the warm panels
-   (multiply drops the art's light background, leaving the gold line) */
-.section--cream { overflow: hidden; }
-.section--cream::after {
-  content: ""; position: absolute; right: -8px; bottom: -16px;
-  width: 360px; height: 280px; pointer-events: none; z-index: 0;
-  background: url("../assets/intro-mother-child.png") center / contain no-repeat;
-  mix-blend-mode: multiply; opacity: 0.5;
-}
-.section--cream > .container { position: relative; z-index: 1; }
-
-/* Signature layered wave — the ivory hero flows into the deep-teal
-   stats band in soft sage + ivory waves (Endura-style). */
-.stats-band { position: relative; }
-.stats-band > .container { position: relative; z-index: 1; padding-top: 78px; }
-.stats-band::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 66px;
-  background: url("../assets/wave-stats.svg") top center / 100% 100% no-repeat;
-  z-index: 0; pointer-events: none;
-}
-@media (max-width: 720px) {
-  .stats-band > .container { padding-top: 56px; }
-  .stats-band::before { height: 44px; }
-}
-
-/* ============================================================
-   Smooth scroll (Lenis) — lets Lenis drive the scroll cleanly.
-   Desktop wheel glides; mobile keeps native touch scrolling.
-   ============================================================ */
+/* ===== Smooth scroll (Lenis) layer — kept; no JS change ===== */
 html.lenis, html.lenis body { height: auto; }
 html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
