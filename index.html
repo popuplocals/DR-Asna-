@@ -43,9 +43,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="css/styles.css?v=2026062705" />
-  <link rel="stylesheet" href="css/premium.css?v=2026062705" />
-  <link rel="stylesheet" href="css/redesign.css?v=2026062705" />
+  <link rel="stylesheet" href="css/styles.css?v=2026062707" />
+  <link rel="stylesheet" href="css/premium.css?v=2026062707" />
+  <link rel="stylesheet" href="css/redesign.css?v=2026062707" />
 </head>
 <body data-page="home" data-prefix="">
   <script>(function(){try{if(sessionStorage.getItem('introSeen')||matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('intro-skip');}}catch(e){}})();</script>
@@ -53,7 +53,7 @@
   <!-- ===== Intro loader (homepage, once per session) ===== -->
   <div id="intro-loader" aria-hidden="true">
     <div class="intro-inner">
-      <img src="assets/intro-mother-child.png?v=2026062705" alt="" class="intro-art" width="480" height="270" />
+      <img src="assets/intro-mother-child.png?v=2026062707" alt="" class="intro-art" width="480" height="270" />
       <p class="intro-name">Dr. Asna Zehra Naqvi</p>
       <p class="intro-sub">Obstetrician &amp; Gynaecologist</p>
     </div>
@@ -119,30 +119,60 @@
   <!-- ===== Know Your Doctor / About ===== -->
   <section class="section" id="about">
     <div class="container">
-      <div class="about-grid">
-        <div>
-          <img src="assets/about-home.webp" alt="Dr. Asna Zehra Naqvi in surgical scrubs" class="about-photo" loading="lazy" />
+      <div class="about-grid kyd-grid">
+        <!-- Ambient layer (decorative, clipped inside itself; no overflow on ancestor) -->
+        <div class="kyd-amb" aria-hidden="true">
+          <span class="kyd-orb kyd-orb-1"></span>
+          <span class="kyd-orb kyd-orb-2"></span>
+          <span class="kyd-orb kyd-orb-3"></span>
+          <i class="kyd-petal kyd-petal-1 fa-solid fa-leaf" aria-hidden="true"></i>
+          <i class="kyd-petal kyd-petal-2 fa-solid fa-leaf" aria-hidden="true"></i>
+          <i class="kyd-spark kyd-spark-1 fa-solid fa-certificate" aria-hidden="true"></i>
+          <i class="kyd-spark kyd-spark-2 fa-solid fa-certificate" aria-hidden="true"></i>
+          <i class="kyd-spark kyd-spark-3 fa-solid fa-certificate" aria-hidden="true"></i>
+          <i class="kyd-dot kyd-dot-1"></i><i class="kyd-dot kyd-dot-2"></i>
+          <i class="kyd-dot kyd-dot-3"></i><i class="kyd-dot kyd-dot-4"></i>
+          <i class="kyd-dot kyd-dot-5"></i>
         </div>
-        <div>
-          <span class="section-head eyebrow" style="display:block;text-align:left;">Know Your Doctor</span>
-          <h2>Internationally Trained, Patient-First Women's Health Specialist</h2>
-          <p>Dr. Asna Zehra Naqvi is a compassionate Senior Consultant in Obstetrics &amp; Gynaecology with over 10 years of experience. She holds an MS in Obstetrics &amp; Gynaecology, the prestigious MRCOG membership from the Royal College of Obstetricians &amp; Gynaecologists, London, and a Diploma in IVF &amp; Reproductive Medicine.</p>
-          <p>Practising at Apollomedics Super Speciality Hospitals, Lucknow, she focuses on high-risk pregnancy management, fertility &amp; IVF care, and minimally invasive (laparoscopic) gynaecological surgery. From a young woman's first visit to pregnancy, delivery and menopause, she cares for women through every stage of life.</p>
-          <p>Patients value her calm, unhurried manner — she listens carefully, explains every option in plain language and never rushes an appointment, so you always leave feeling heard, informed and reassured.</p>
-          <a href="about.html" class="btn btn--outline">Read About Me</a>
-        </div>
-      </div>
 
-      <!-- Hospital / location -->
-      <div class="location-block">
-        <div>
-          <h3 style="color:var(--accent-deep);"><i class="fa-solid fa-location-dot"></i> Now at Apollomedics Super Speciality Hospitals</h3>
-          <p style="margin:0;color:var(--muted);">Kanpur Rd, Sector B, Bargawan, LDA Colony, Lucknow, Uttar Pradesh 226012</p>
+        <!-- LEFT: sticky photo with arch frame + offset gold border + floating quote -->
+        <div class="kyd-photo-col">
+          <div class="kyd-card-wrap" id="kyd-tilt">
+            <span class="kyd-goldframe" aria-hidden="true"></span>
+            <figure class="kyd-card">
+              <img src="assets/about-home.webp" alt="Dr. Asna Zehra Naqvi in surgical scrubs" class="kyd-img about-photo" loading="lazy" />
+              <span class="kyd-glare" aria-hidden="true"></span>
+            </figure>
+            <aside class="kyd-quote">
+              <i class="fa-solid fa-quote-right kyd-quote-mark" aria-hidden="true"></i>
+              <p>She listens carefully and never rushes an appointment.</p>
+            </aside>
+          </div>
         </div>
-        <a class="btn btn--primary" target="_blank" rel="noopener"
-           href="https://www.google.com/maps/search/?api=1&query=Apollomedics+Super+Speciality+Hospitals+Lucknow">
-          <i class="fa-solid fa-diamond-turn-right"></i> Get Directions
-        </a>
+
+        <!-- RIGHT: text + location, each block reveals on scroll -->
+        <div class="kyd-content">
+          <div class="kyd-reveal">
+            <span class="section-head eyebrow" style="display:block;text-align:left;">Know Your Doctor</span>
+            <h2>Internationally Trained, Patient-First Women's Health Specialist</h2>
+          </div>
+          <p class="kyd-reveal">Dr. Asna Zehra Naqvi is a compassionate Senior Consultant in Obstetrics &amp; Gynaecology with over 10 years of experience. She holds an MS in Obstetrics &amp; Gynaecology, the prestigious MRCOG membership from the Royal College of Obstetricians &amp; Gynaecologists, London, and a Diploma in IVF &amp; Reproductive Medicine.</p>
+          <p class="kyd-reveal">Practising at Apollomedics Super Speciality Hospitals, Lucknow, she focuses on high-risk pregnancy management, fertility &amp; IVF care, and minimally invasive (laparoscopic) gynaecological surgery. From a young woman's first visit to pregnancy, delivery and menopause, she cares for women through every stage of life.</p>
+          <p class="kyd-reveal">Patients value her calm, unhurried manner — she listens carefully, explains every option in plain language and never rushes an appointment, so you always leave feeling heard, informed and reassured.</p>
+          <div class="kyd-reveal">
+            <a href="about.html" class="btn btn--outline">Read About Me</a>
+          </div>
+          <div class="location-block kyd-reveal">
+            <div>
+              <h3 style="color:var(--accent-deep);"><i class="fa-solid fa-location-dot"></i> Now at Apollomedics Super Speciality Hospitals</h3>
+              <p style="margin:0;color:var(--muted);">Kanpur Rd, Sector B, Bargawan, LDA Colony, Lucknow, Uttar Pradesh 226012</p>
+            </div>
+            <a class="btn btn--primary" target="_blank" rel="noopener"
+               href="https://www.google.com/maps/search/?api=1&query=Apollomedics+Super+Speciality+Hospitals+Lucknow">
+              <i class="fa-solid fa-diamond-turn-right"></i> Get Directions
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -449,8 +479,8 @@
   <!-- ===== Footer + floating buttons (injected) ===== -->
   <div id="site-footer-mount"></div>
 
-  <script src="js/includes.js?v=2026062705"></script>
-  <script src="js/main.js?v=2026062705"></script>
+  <script src="js/includes.js?v=2026062707"></script>
+  <script src="js/main.js?v=2026062707"></script>
   <script>
   (function () {
     var el = document.getElementById('intro-loader');
@@ -514,6 +544,55 @@
     } else if (grid) {
       grid.classList.add('cards-play');
     }
+
+    // ----- Know Your Doctor: scroll reveal (staggered) + 3D pointer/touch tilt
+    (function () {
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var blocks = Array.from(document.querySelectorAll('#about .kyd-reveal'));
+      if (blocks.length) {
+        blocks.forEach(function (el, i) { el.style.setProperty('--kyd-delay', (i * 0.08) + 's'); });
+        if (!reduce && 'IntersectionObserver' in window) {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+            });
+          }, { threshold: 0.18 });
+          blocks.forEach(function (b) { io.observe(b); });
+        } else {
+          blocks.forEach(function (b) { b.classList.add('is-in'); });
+        }
+      }
+      // 3D tilt — pointer events (mouse + touch on same listener)
+      var tilt = document.getElementById('kyd-tilt');
+      if (tilt && !reduce) {
+        var MAX = 8;
+        var raf = null;
+        function onMove(ev) {
+          var r = tilt.getBoundingClientRect();
+          var px = (ev.clientX - r.left) / r.width;
+          var py = (ev.clientY - r.top) / r.height;
+          px = Math.max(0, Math.min(1, px));
+          py = Math.max(0, Math.min(1, py));
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(function () {
+            var rx = (0.5 - py) * MAX * 2;
+            var ry = (px - 0.5) * MAX * 2;
+            tilt.style.transform = 'perspective(950px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) scale(1.035)';
+            tilt.style.setProperty('--kgx', (px * 100) + '%');
+            tilt.style.setProperty('--kgy', (py * 100) + '%');
+            tilt.style.setProperty('--kglare', '0.4');
+          });
+        }
+        function reset() {
+          if (raf) cancelAnimationFrame(raf);
+          tilt.style.transform = 'perspective(950px) rotateX(0deg) rotateY(0deg) scale(1)';
+          tilt.style.setProperty('--kglare', '0');
+        }
+        tilt.addEventListener('pointermove', onMove);
+        tilt.addEventListener('pointerleave', reset);
+        tilt.addEventListener('pointercancel', reset);
+      }
+    })();
 
     // ----- Specialized Treatments grid — scroll-reveal + column stagger + tap-to-open
     (function () {

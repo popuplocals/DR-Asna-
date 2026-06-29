@@ -293,6 +293,180 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
 }
 
 /* ============================================================
+   Know Your Doctor — sticky photo + scroll-reveal + 3D tilt
+   Brand colours/fonts only (teal / blush / gold + Playfair/Montserrat).
+   IMPORTANT: no overflow:hidden on any ancestor of .kyd-photo-col
+   so position:sticky keeps working. Ambient layer clips inside itself.
+   ============================================================ */
+.about-grid.kyd-grid {
+  position: relative;
+  align-items: start;
+  gap: 56px;
+}
+
+/* Ambient layer — orbs, petals, sparkles, dots (decorative, non-interactive) */
+.kyd-amb {
+  position: absolute; inset: 0;
+  pointer-events: none; overflow: hidden;
+  border-radius: 28px; z-index: 0;
+}
+/* Lift content above the ambient orbs; photo-col stays sticky (below) */
+.about-grid.kyd-grid > .kyd-content { position: relative; z-index: 1; }
+
+.kyd-orb { position: absolute; border-radius: 50%; filter: blur(46px); opacity: .42; }
+.kyd-orb-1 { width: 300px; height: 300px; background: var(--baby-pink); top: -60px; left: -50px;  animation: kydDrift1 17s ease-in-out infinite; }
+.kyd-orb-2 { width: 240px; height: 240px; background: #EAD5B7;          bottom: -50px; right: 8%; animation: kydDrift2 21s ease-in-out infinite; }
+.kyd-orb-3 { width: 210px; height: 210px; background: var(--blush-pink); top: 40%; right: -60px;  animation: kydDrift3 19s ease-in-out infinite; }
+
+.kyd-petal   { position: absolute; color: var(--gold-line); opacity: .32; font-size: 22px; }
+.kyd-petal-1 { top: 14%; left: 46%; animation: kydFloatRot 12s ease-in-out infinite; }
+.kyd-petal-2 { bottom: 16%; left: 8%; opacity: .26; animation: kydFloatRot 15s ease-in-out infinite reverse; }
+
+.kyd-spark   { position: absolute; color: var(--gold-line); opacity: 0; font-size: 14px; }
+.kyd-spark-1 { top: 22%; left: 30%; animation: kydTwinkle 4.5s ease-in-out infinite .4s; }
+.kyd-spark-2 { top: 64%; left: 52%; animation: kydTwinkle 5.2s ease-in-out infinite 1.6s; }
+.kyd-spark-3 { top: 38%; right: 18%; animation: kydTwinkle 6s   ease-in-out infinite 2.8s; }
+
+.kyd-dot   { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--gold-line); opacity: 0; }
+.kyd-dot-1 { top: 30%; left: 20%;  animation: kydTwinkle 4s   ease-in-out infinite .2s; }
+.kyd-dot-2 { top: 74%; left: 34%;  animation: kydTwinkle 5s   ease-in-out infinite 1.1s; }
+.kyd-dot-3 { top: 18%; right: 26%; animation: kydTwinkle 4.6s ease-in-out infinite 2.2s; }
+.kyd-dot-4 { bottom: 24%; right: 30%; animation: kydTwinkle 5.4s ease-in-out infinite 1.7s; }
+.kyd-dot-5 { top: 52%; left: 60%;  animation: kydTwinkle 6.2s ease-in-out infinite .9s; }
+
+/* LEFT: sticky photo column */
+.kyd-photo-col {
+  position: sticky;
+  top: 110px;            /* navbar capsule height + small gap */
+  align-self: start;
+  z-index: 1;            /* above the ambient orbs */
+}
+.kyd-card-wrap {
+  position: relative;
+  width: clamp(280px, 30vw, 360px);
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  /* Entrance: subtle scale-in */
+  opacity: 0;
+  transform: perspective(950px) rotateX(0) rotateY(0) scale(.92);
+  animation: kydCardIn 1s cubic-bezier(.2,.8,.2,1) .2s forwards;
+}
+@keyframes kydCardIn {
+  to { opacity: 1; transform: perspective(950px) rotateX(0) rotateY(0) scale(1); }
+}
+
+/* Offset gold border behind the photo for depth */
+.kyd-goldframe {
+  position: absolute; top: 16px; left: 14px;
+  width: 100%; height: 100%;
+  border: 1.5px solid var(--gold-line);
+  border-radius: 50% 50% 18px 18px / 38% 38% 18px 18px;
+  opacity: .6; pointer-events: none;
+  transform: translateZ(-2px);
+}
+
+/* Arch-shaped photo card */
+.kyd-card {
+  position: relative; margin: 0;
+  width: 100%; aspect-ratio: 3 / 4;
+  border-radius: 50% 50% 18px 18px / 38% 38% 18px 18px;
+  overflow: hidden;
+  background: var(--blush-pink);
+  box-shadow: 0 32px 64px rgba(8, 77, 80, 0.22);
+  transform: translateZ(20px);
+}
+/* Override the global .about-photo radius/shadow inside the arch card */
+.kyd-card .kyd-img.about-photo {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  border-radius: 0; box-shadow: none; aspect-ratio: auto;
+  animation: kydKenburns 18s ease-in-out infinite 1.2s;
+}
+
+/* Light glare follows cursor/touch */
+.kyd-glare {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(220px circle at var(--kgx,50%) var(--kgy,50%),
+                              rgba(255,255,255,.5), transparent 60%);
+  opacity: var(--kglare, 0);
+  transition: opacity .3s ease;
+  mix-blend-mode: screen;
+}
+
+/* Floating quote — overlaps bottom-right corner */
+.kyd-quote {
+  position: absolute; right: -22px; bottom: 16px;
+  transform: translateZ(40px);
+  background: var(--accent-deep);
+  border-left: 3px solid var(--gold-line);
+  border-radius: 13px;
+  padding: 14px 16px;
+  max-width: 210px;
+  box-shadow: 0 18px 36px rgba(8, 77, 80, 0.34);
+  animation: kydFloatY 5s ease-in-out infinite 1.5s;
+  z-index: 2;
+}
+.kyd-quote-mark { color: var(--gold-line); font-size: 16px; }
+.kyd-quote p {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 13.5px; line-height: 1.42;
+  color: #FBF7F1;
+}
+
+/* RIGHT: content column — block reveals */
+.kyd-content { display: flex; flex-direction: column; }
+.kyd-reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .7s cubic-bezier(.2,.8,.2,1),
+              transform .7s cubic-bezier(.2,.8,.2,1);
+  transition-delay: var(--kyd-delay, 0s);
+}
+.kyd-reveal.is-in { opacity: 1; transform: none; }
+
+/* Responsive: stack on mobile, sticky OFF, photo at sensible size */
+@media (max-width: 900px) {
+  .about-grid.kyd-grid { grid-template-columns: 1fr; gap: 40px; }
+  .kyd-photo-col { position: static; top: auto; }
+  .kyd-card-wrap { width: 250px; }
+  .kyd-quote { right: 8px; max-width: 200px; }
+  .kyd-amb { display: none; } /* hide ambient on mobile to avoid clutter */
+}
+
+/* Reduced motion: kill all continuous + tilt animations */
+@media (prefers-reduced-motion: reduce) {
+  .kyd-orb, .kyd-petal, .kyd-spark, .kyd-dot,
+  .kyd-img.about-photo, .kyd-quote { animation: none !important; }
+  .kyd-card-wrap {
+    opacity: 1 !important;
+    transform: perspective(950px) rotateX(0) rotateY(0) scale(1) !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .kyd-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .kyd-glare { opacity: 0 !important; }
+}
+
+/* Keyframes (prefixed kyd... so they don't collide) */
+@keyframes kydDrift1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(26px,18px); } }
+@keyframes kydDrift2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-22px,-16px); } }
+@keyframes kydDrift3 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-18px,22px); } }
+@keyframes kydFloatRot { 0%,100% { transform: translate(0,0) rotate(0); } 50% { transform: translate(8px,-12px) rotate(14deg); } }
+@keyframes kydTwinkle { 0%,100% { opacity: 0; transform: scale(.6); } 50% { opacity: .85; transform: scale(1); } }
+@keyframes kydKenburns {
+  0%   { transform: scale(1.05) translate(0,0); }
+  50%  { transform: scale(1.12) translate(-2%,-2%); }
+  100% { transform: scale(1.05) translate(0,0); }
+}
+@keyframes kydFloatY {
+  0%,100% { transform: translateZ(40px) translateY(0); }
+  50%     { transform: translateZ(40px) translateY(-7px); }
+}
+
+/* ============================================================
    Specialized Treatments grid — overlay-hover service cards
    (scroll-reveal + column stagger, slide-up overlay, image zoom)
    Easing: cubic-bezier(.16,1,.3,1) — buttery expo
