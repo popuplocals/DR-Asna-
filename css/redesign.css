@@ -302,6 +302,7 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
   position: relative;
   align-items: start;
   gap: 56px;
+  --pin-top: 110px;   /* navbar capsule height + small gap; override per site */
 }
 
 /* Ambient layer — orbs, petals, sparkles, dots (decorative, non-interactive) */
@@ -337,7 +338,7 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
 /* LEFT: sticky photo column */
 .kyd-photo-col {
   position: sticky;
-  top: 110px;            /* navbar capsule height + small gap */
+  top: var(--pin-top, 110px);
   align-self: start;
   z-index: 1;            /* above the ambient orbs */
 }
