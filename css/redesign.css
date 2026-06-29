@@ -766,3 +766,45 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
 @media (max-width: 720px) {
   #lx-to-top { left: auto; right: 84px; bottom: 84px; width: 42px; height: 42px; }
 }
+
+/* ============================================================
+   Know Your Doctor — photo card size increase (~13% bigger)
+   Overrides the fixed pixel dimensions set earlier in this file.
+   ============================================================ */
+.kyd-card-wrap { width: 280px; }
+.kyd-card      { width: 280px; height: 375px; border-radius: 132px 132px 18px 18px; }
+.kyd-goldframe { border-radius: 132px 132px 18px 18px; }
+
+/* Glare circle scales with card */
+.kyd-glare {
+  background: radial-gradient(
+    260px circle at var(--kgx, 50%) var(--kgy, 50%),
+    rgba(255,255,255,.5), transparent 60%
+  );
+}
+
+@media (max-width: 900px) {
+  .kyd-card-wrap { width: 255px; }
+  .kyd-card      { width: 255px; height: 342px; border-radius: 120px 120px 18px 18px; }
+  .kyd-goldframe { border-radius: 120px 120px 18px 18px; }
+}
+
+/* ============================================================
+   "Care You Can Trust" cards — spring bump on hover / tap
+   cubic-bezier(0.34, 1.56, 0.64, 1) overshoots then settles,
+   giving the tactile bounce feel the user asked for.
+   The !important is required because the flip-in entry animation
+   rules earlier in this file also use !important on transform.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .section--cream .card-grid.cards-play .card:hover {
+    transform:
+      perspective(900px) rotateY(0deg)
+      translateY(-11px) scale(1.035) !important;
+    box-shadow: 0 30px 60px rgba(15, 107, 110, 0.22) !important;
+    transition:
+      opacity  .65s cubic-bezier(.2,.8,.2,1),
+      transform .5s  cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow .45s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  }
+}
