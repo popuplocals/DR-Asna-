@@ -292,6 +292,139 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
   .section--lavender:has(.reviews-grid)::before { animation: none; }
 }
 
+/* ============================================================
+   Specialized Treatments grid — overlay-hover service cards
+   (scroll-reveal + column stagger, slide-up overlay, image zoom)
+   Easing: cubic-bezier(.16,1,.3,1) — buttery expo
+   ============================================================ */
+.lx-svc-grid {
+  display: grid; gap: 28px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 40px;
+}
+@media (max-width: 1024px) { .lx-svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px)  { .lx-svc-grid { grid-template-columns: 1fr; gap: 22px; } }
+
+.lx-svc-card {
+  position: relative; display: block;
+  border-radius: 22px; overflow: hidden;
+  background: #fff; color: inherit; text-decoration: none;
+  aspect-ratio: 4 / 5;
+  box-shadow: 0 14px 34px rgba(15, 107, 110, 0.10);
+  isolation: isolate;
+  opacity: 0; transform: translateY(40px);
+  transition:
+    opacity .85s cubic-bezier(.16,1,.3,1),
+    transform .85s cubic-bezier(.16,1,.3,1),
+    box-shadow .45s cubic-bezier(.16,1,.3,1);
+}
+.lx-svc-card.lx-visible {
+  opacity: 1; transform: translateY(0);
+  transition-delay: calc(var(--lx-col, 0) * .09s);
+}
+.lx-svc-card:hover { box-shadow: 0 28px 56px rgba(15, 107, 110, 0.24); }
+.lx-svc-card:focus-visible {
+  outline: 2px solid var(--gold-line); outline-offset: 3px;
+}
+
+/* Image fills the card; zooms on hover */
+.lx-svc-image { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.lx-svc-image img {
+  width: 100%; height: 100%; display: block;
+  object-fit: cover; object-position: center;
+  transition: transform .7s cubic-bezier(.16,1,.3,1);
+}
+.lx-svc-card:hover .lx-svc-image img,
+.lx-svc-card.lx-open .lx-svc-image img {
+  transform: scale(1.10);
+}
+/* Subtle base dim so the white title is always legible */
+.lx-svc-image::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.45) 100%);
+}
+
+/* Category tag pill (top-left) — fades out on hover */
+.lx-svc-tag {
+  position: absolute; top: 16px; left: 16px; z-index: 3;
+  padding: 6px 13px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--primary);
+  font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: 1.4px; text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(15, 107, 110, 0.16);
+  transition: opacity .55s cubic-bezier(.16,1,.3,1);
+}
+.lx-svc-card:hover .lx-svc-tag,
+.lx-svc-card.lx-open .lx-svc-tag { opacity: 0; }
+
+/* Title — always visible, white, bottom-left; nudges up on hover */
+.lx-svc-title {
+  position: absolute; bottom: 22px; left: 22px; right: 22px; z-index: 3;
+  margin: 0; padding: 0;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+  font-weight: 600; line-height: 1.18; letter-spacing: -0.005em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.42);
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
+}
+.lx-svc-card:hover .lx-svc-title,
+.lx-svc-card.lx-open .lx-svc-title { transform: translateY(-6px); }
+
+/* Overlay: deep-teal gradient that slides up from the bottom */
+.lx-svc-overlay {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 22px 22px 70px;
+  background: linear-gradient(0deg,
+    var(--accent-deep) 0%,
+    var(--primary) 75%,
+    rgba(15, 107, 110, 0.0) 100%);
+  color: rgba(255, 255, 255, 0.96);
+  transform: translateY(70%);
+  transition: transform .6s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+}
+.lx-svc-overlay p {
+  margin: 0 0 12px; font-size: .92rem; line-height: 1.55;
+  opacity: 0; transform: translateY(10px);
+  transition:
+    opacity .5s cubic-bezier(.16,1,.3,1) .15s,
+    transform .5s cubic-bezier(.16,1,.3,1) .15s;
+}
+.lx-svc-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body);
+  font-size: .88rem; font-weight: 600; letter-spacing: .025em;
+  color: #F9E9C6;
+  opacity: 0; transform: translateY(10px);
+  transition:
+    opacity .5s cubic-bezier(.16,1,.3,1) .22s,
+    transform .5s cubic-bezier(.16,1,.3,1) .22s;
+}
+.lx-svc-cta i { transition: transform .35s cubic-bezier(.16,1,.3,1); }
+.lx-svc-card:hover .lx-svc-overlay,
+.lx-svc-card.lx-open .lx-svc-overlay { transform: translateY(0); }
+.lx-svc-card:hover .lx-svc-overlay p,
+.lx-svc-card.lx-open .lx-svc-overlay p,
+.lx-svc-card:hover .lx-svc-cta,
+.lx-svc-card.lx-open .lx-svc-cta { opacity: 1; transform: translateY(0); }
+.lx-svc-card:hover .lx-svc-cta i,
+.lx-svc-card.lx-open .lx-svc-cta i { transform: translateX(4px); }
+
+/* Reduced motion: show cards + content statically, no transitions */
+@media (prefers-reduced-motion: reduce) {
+  .lx-svc-card {
+    opacity: 1 !important; transform: none !important;
+    transition: none !important; transition-delay: 0s !important;
+  }
+  .lx-svc-image img { transition: none !important; }
+  .lx-svc-overlay { transform: translateY(0); transition: none !important; padding-bottom: 22px; }
+  .lx-svc-overlay p, .lx-svc-cta { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .lx-svc-tag { opacity: 1 !important; }
+}
+
 /* ----- Scroll-to-top button (markup injected by main.js) */
 #lx-to-top {
   position: fixed; left: 18px; bottom: 18px; z-index: 85;
