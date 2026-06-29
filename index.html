@@ -43,9 +43,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="css/styles.css?v=2026062701" />
-  <link rel="stylesheet" href="css/premium.css?v=2026062701" />
-  <link rel="stylesheet" href="css/redesign.css?v=2026062701" />
+  <link rel="stylesheet" href="css/styles.css?v=2026062704" />
+  <link rel="stylesheet" href="css/premium.css?v=2026062704" />
+  <link rel="stylesheet" href="css/redesign.css?v=2026062704" />
 </head>
 <body data-page="home" data-prefix="">
   <script>(function(){try{if(sessionStorage.getItem('introSeen')||matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('intro-skip');}}catch(e){}})();</script>
@@ -53,7 +53,7 @@
   <!-- ===== Intro loader (homepage, once per session) ===== -->
   <div id="intro-loader" aria-hidden="true">
     <div class="intro-inner">
-      <img src="assets/intro-mother-child.png?v=2026062701" alt="" class="intro-art" width="480" height="270" />
+      <img src="assets/intro-mother-child.png?v=2026062704" alt="" class="intro-art" width="480" height="270" />
       <p class="intro-name">Dr. Asna Zehra Naqvi</p>
       <p class="intro-sub">Obstetrician &amp; Gynaecologist</p>
     </div>
@@ -489,8 +489,8 @@
   <!-- ===== Footer + floating buttons (injected) ===== -->
   <div id="site-footer-mount"></div>
 
-  <script src="js/includes.js?v=2026062701"></script>
-  <script src="js/main.js?v=2026062701"></script>
+  <script src="js/includes.js?v=2026062704"></script>
+  <script src="js/main.js?v=2026062704"></script>
   <script>
   (function () {
     var el = document.getElementById('intro-loader');
@@ -536,6 +536,46 @@
       window.__lenis = lenis;
     };
     document.head.appendChild(s);
+  })();
+  </script>
+
+  <!-- Premium animation hooks: card flip-in cascade + scroll-to-top button -->
+  <script>
+  (function () {
+    // ----- Card flip-in cascade (Care You Can Trust)
+    var grid = document.querySelector('.section--cream .card-grid');
+    if (grid && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { grid.classList.add('cards-play'); io.disconnect(); }
+        });
+      }, { threshold: 0.2 });
+      io.observe(grid);
+    } else if (grid) {
+      grid.classList.add('cards-play');
+    }
+
+    // ----- Scroll-to-top button
+    var btn = document.createElement('button');
+    btn.id = 'lx-to-top';
+    btn.setAttribute('aria-label', 'Scroll to top');
+    btn.innerHTML = '<i class="fa-solid fa-arrow-up" aria-hidden="true"></i>';
+    document.body.appendChild(btn);
+    btn.addEventListener('click', function () {
+      if (window.__lenis) window.__lenis.scrollTo(0);
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        btn.classList.toggle('is-visible', (window.scrollY || 0) > 400);
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   })();
   </script>
 </body>
