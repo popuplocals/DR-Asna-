@@ -808,3 +808,56 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
       box-shadow .45s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
   }
 }
+
+/* ============================================================
+   Header logo — spring scale + glow on hover / tap
+   ============================================================ */
+.logo .site-logo {
+  transition:
+    transform .45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter    .3s  var(--ease-out);
+}
+.logo:hover .site-logo,
+.logo:focus-visible .site-logo {
+  transform: scale(1.10);
+  filter: drop-shadow(0 4px 14px rgba(15, 107, 110, 0.42));
+}
+
+/* ============================================================
+   Footer — hover / tap animations
+   ============================================================ */
+
+/* Social icons: spring bounce + lift + teal glow */
+.socials a {
+  transition:
+    transform  .45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background .3s  var(--ease-out),
+    color      .25s var(--ease-out),
+    box-shadow .35s var(--ease-out);
+}
+.socials a:hover {
+  transform: scale(1.22) translateY(-4px);
+  background: var(--primary) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 20px rgba(15, 107, 110, 0.38);
+}
+
+/* Footer nav links + contact links: warm gold + right-nudge */
+.site-footer ul a {
+  display: inline-block;
+  transition:
+    color     .25s var(--ease-out),
+    transform .35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.site-footer ul a:hover {
+  color: #F9E9C6 !important;
+  transform: translateX(5px);
+}
+
+/* Contact list items: nudge right on hover (whole row) */
+.foot-contact li {
+  transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.foot-contact li:hover {
+  transform: translateX(5px);
+}
