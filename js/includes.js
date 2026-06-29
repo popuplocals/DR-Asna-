@@ -146,7 +146,7 @@
   <header class="site-header">
     <div class="container">
       <a class="logo" href="${p}index.html" aria-label="Dr. Asna Zehra Naqvi home">
-        <img src="${p}assets/logo.png?v=3" alt="Dr. Asna Zehra Naqvi — Obstetrics &amp; Gynaecology" class="site-logo"
+        <img src="${p}assets/logo.png?v=4" alt="Dr. Asna Zehra Naqvi — Obstetrics &amp; Gynaecology" class="site-logo"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
         <span class="logo-text" style="display:none;">
           <span class="logo-name">Dr. Asna Zehra Naqvi</span>
@@ -166,7 +166,7 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <img src="${p}assets/logo.png?v=3" alt="Dr. Asna Zehra Naqvi — Obstetrics &amp; Gynaecology" class="footer-logo">
+          <img src="${p}assets/logo.png?v=4" alt="Dr. Asna Zehra Naqvi — Obstetrics &amp; Gynaecology" class="footer-logo">
           <p style="color:#b8a9b3;">Senior Consultant, Obstetrics &amp; Gynaecology. Compassionate, internationally trained women's health care in Lucknow.</p>
           <div class="socials">
             <a href="https://www.instagram.com/dr.asna_z_naqvi/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
