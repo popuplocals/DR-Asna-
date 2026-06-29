@@ -1075,6 +1075,7 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
   [data-page="gallery"] .gallery-item:nth-child(4)  { animation-delay: .28s; }
   [data-page="gallery"] .gallery-item:nth-child(5)  { animation-delay: .36s; }
   [data-page="gallery"] .gallery-item:nth-child(6)  { animation-delay: .44s; }
+  [data-page="gallery"] .gallery-item:nth-child(7)  { animation-delay: .52s; }
   @keyframes galTilt {
     from { opacity: 0; transform: perspective(700px) rotateY(12deg) translateY(28px); }
     to   { opacity: 1; transform: none; }
