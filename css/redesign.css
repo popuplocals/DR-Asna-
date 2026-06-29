@@ -842,8 +842,8 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
    ============================================================ */
 .footer-logo {
   display: block;
-  width: 240px;
-  max-width: 90%;
+  width: 290px;
+  max-width: 92%;
   height: auto;
   opacity: .92;
   filter: brightness(0) invert(1);
