@@ -166,6 +166,7 @@
     <div class="container">
       <div class="footer-grid">
         <div>
+          <img src="${p}assets/logo.png?v=2" alt="Dr. Asna Zehra Naqvi" class="footer-logo">
           <h4>Dr. Asna Zehra Naqvi</h4>
           <p style="color:#b8a9b3;">Senior Consultant, Obstetrics &amp; Gynaecology. Compassionate, internationally trained women's health care in Lucknow.</p>
           <div class="socials">
