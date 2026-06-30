@@ -287,6 +287,19 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .section--lavender:has(.reviews-grid) .section-head p { color: #fff; }
 .section--lavender:has(.reviews-grid) .section-head .eyebrow { color: #F9E9C6; }
 .section--lavender:has(.reviews-grid) .section-head .eyebrow::after { background: #F9E9C6; }
+/* Reviews CTA — readable over the dark teal photo background */
+.section--lavender:has(.reviews-grid) .btn--outline {
+  color: #fff;
+  border-color: rgba(249,233,198,.9);
+  background: rgba(255,255,255,.10);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+.section--lavender:has(.reviews-grid) .btn--outline:hover {
+  color: var(--accent-deep);
+  background: #F9E9C6;
+  border-color: #F9E9C6;
+}
 @keyframes lxStoryZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
 @media (prefers-reduced-motion: reduce) {
   .section--lavender:has(.reviews-grid)::before { animation: none; }
