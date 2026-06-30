@@ -245,8 +245,8 @@ p { margin: 0 0 1rem; }
 .about-block-body p:last-child { margin-bottom: 0; }
 
 .location-block {
-  display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;
-  background: #fff; border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow-soft);
+  display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
+  background: #fff; border-radius: var(--radius); padding: 36px 40px; box-shadow: var(--shadow-soft);
   margin-top: 36px;
 }
 .location-block i { color: var(--primary); margin-right: 8px; }
