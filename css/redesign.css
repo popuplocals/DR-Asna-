@@ -1715,3 +1715,42 @@ a.gi-value-link:hover { color: var(--gi-gold); }
   .bento-tile .tile-bar,
   .bento-tile .tile-icon { transition: none !important; }
 }
+
+/* ============================================================
+   MOBILE — fit-to-phone fixes + polish
+   ============================================================ */
+/* Horizontal slide-in reveals (translateX) push content past the right
+   edge on phones, causing a sideways scroll. Render them static on small
+   screens — the slide effect isn't needed there. (Safe: no overflow on
+   html/body/sections, so the sticky header + KYD sticky photo are intact.) */
+@media (max-width: 768px) {
+  .reveal-left, .reveal-right,
+  .js-anim.reveal-left, .js-anim.reveal-right,
+  body[data-prefix="../"] .service-body ul li,
+  body[data-prefix="../"] .svc-links a,
+  [data-page="contact"] .credentials li {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  /* tighter section rhythm on phones */
+  .section { padding: 46px 0; }
+  .container { padding-left: 18px; padding-right: 18px; }
+
+  /* page banners */
+  .page-banner h1 { font-size: clamp(1.5rem, 6.4vw, 1.9rem); }
+
+  /* bento tiles: less padding, smaller feature text */
+  .bento-grid { gap: 16px; }
+  .bento-tile { padding: 22px 20px; }
+  .tile-phil .phil-text { font-size: 1.18rem; }
+  .tile-phil .phil-quote-mark { font-size: 3.6rem; }
+  .tile-title { font-size: 1.2rem; }
+
+  /* contact timeline panel a touch tighter */
+  .gi-panel { padding: 26px 20px; }
+  .gi-heading { font-size: clamp(1.5rem, 7vw, 1.95rem); }
+}
