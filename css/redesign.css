@@ -826,7 +826,10 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
    Nav glider — pill that slides under the active / hovered link
    (desktop only; hidden on the mobile sidebar nav)
    ============================================================ */
-.main-nav ul { position: relative; }
+.main-nav > ul { position: relative; }   /* direct child only — must NOT match the .dropdown ul */
+/* Services dropdown: stack the 9 items vertically (override the
+   base .main-nav ul { display:flex } which otherwise rows them) */
+.main-nav ul.dropdown { display: block; }
 .nav-glider {
   position: absolute;
   top: 50%;
@@ -861,6 +864,7 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
    No rectangular tap-highlight (suppress browser default)
    ============================================================ */
 .logo {
+  flex: none;   /* never let the logo shrink/collapse under nav pressure */
   -webkit-tap-highlight-color: transparent;
   background: transparent !important;
 }
