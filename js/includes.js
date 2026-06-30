@@ -68,8 +68,8 @@
     ld.type = "application/ld+json";
     ld.id = "ld-global";
     ld.textContent = `{"@context":"https://schema.org","@graph":[
-{"@type":"Physician","@id":"https://asnanaqvi.com/#physician","name":"Dr. Asna Zehra Naqvi","image":"https://asnanaqvi.com/assets/about-doctor.png","url":"https://asnanaqvi.com","telephone":"+91-8429021972","priceRange":"₹800–₹1000","medicalSpecialty":["Gynecologic","Obstetric"],"knowsLanguage":["English","Hindi"],"alumniOf":[{"@type":"CollegeOrUniversity","name":"Institute of Medical Sciences, Banaras Hindu University (IMS-BHU), Varanasi"},{"@type":"EducationalOrganization","name":"Royal College of Obstetricians & Gynaecologists, London (MRCOG)"}],"hasCredential":["MBBS","MS (Obstetrics & Gynaecology)","MRCOG (London)","Diploma in IVF & Reproductive Medicine"],"memberOf":{"@type":"Organization","name":"Royal College of Obstetricians & Gynaecologists, London, UK"},"worksFor":{"@id":"https://asnanaqvi.com/#clinic"},"sameAs":["https://www.instagram.com/dr.asna_z_naqvi/","https://www.facebook.com/dr.asnaznaqvi","https://www.youtube.com/@Dr.AsnaZehraNaqvi","https://www.apollo247.com/doctors/dr-asna-zehra-naqvi-5a77eea8-2715-47b3-a2c4-f0ff93fd33ca"]},
-{"@type":["MedicalClinic","MedicalBusiness"],"@id":"https://asnanaqvi.com/#clinic","name":"Dr. Asna Zehra Naqvi — Gynaecologist & Obstetrician, Apollomedics Lucknow","telephone":"+91-8429021972","priceRange":"₹800–₹1000","address":{"@type":"PostalAddress","streetAddress":"Apollomedics Super Speciality Hospitals, Kanpur Road, Sector B, Bargawan, LDA Colony","addressLocality":"Lucknow","addressRegion":"UP","postalCode":"226012","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":26.798121,"longitude":80.901521},"hasMap":"https://www.google.com/maps?q=26.798121,80.901521","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday"],"opens":"09:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Friday","Saturday"],"opens":"09:00","closes":"17:00"}]},
+{"@type":"Physician","@id":"https://asnanaqvi.com/#physician","name":"Dr. Asna Zehra Naqvi","image":"https://asnanaqvi.com/assets/about-doctor.png","url":"https://asnanaqvi.com","telephone":"+91-9988443272","priceRange":"₹800–₹1000","medicalSpecialty":["Gynecologic","Obstetric"],"knowsLanguage":["English","Hindi"],"alumniOf":[{"@type":"CollegeOrUniversity","name":"Institute of Medical Sciences, Banaras Hindu University (IMS-BHU), Varanasi"},{"@type":"EducationalOrganization","name":"Royal College of Obstetricians & Gynaecologists, London (MRCOG)"}],"hasCredential":["MBBS","MS (Obstetrics & Gynaecology)","MRCOG (London)","Diploma in IVF & Reproductive Medicine"],"memberOf":{"@type":"Organization","name":"Royal College of Obstetricians & Gynaecologists, London, UK"},"worksFor":{"@id":"https://asnanaqvi.com/#clinic"},"sameAs":["https://www.instagram.com/dr.asna_z_naqvi/","https://www.facebook.com/dr.asnaznaqvi","https://www.youtube.com/@Dr.AsnaZehraNaqvi","https://www.apollo247.com/doctors/dr-asna-zehra-naqvi-5a77eea8-2715-47b3-a2c4-f0ff93fd33ca"]},
+{"@type":["MedicalClinic","MedicalBusiness"],"@id":"https://asnanaqvi.com/#clinic","name":"Dr. Asna Zehra Naqvi — Gynaecologist & Obstetrician, Apollomedics Lucknow","telephone":"+91-9988443272","priceRange":"₹800–₹1000","address":{"@type":"PostalAddress","streetAddress":"Apollomedics Super Speciality Hospitals, Kanpur Road, Sector B, Bargawan, LDA Colony","addressLocality":"Lucknow","addressRegion":"UP","postalCode":"226012","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":26.798121,"longitude":80.901521},"hasMap":"https://www.google.com/maps?q=26.798121,80.901521","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday"],"opens":"09:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Friday","Saturday"],"opens":"09:00","closes":"17:00"}]},
 {"@type":"WebSite","@id":"https://asnanaqvi.com/#website","url":"https://asnanaqvi.com","name":"Dr. Asna Zehra Naqvi","inLanguage":"en-IN","publisher":{"@id":"https://asnanaqvi.com/#physician"}}]}`;
     document.head.appendChild(ld);
   }
@@ -141,7 +141,7 @@
   const header = `
   <div class="emergency-strip">
     <i class="fa-solid fa-truck-medical"></i> 24/7 Emergency &amp; Maternity Care &mdash;
-    <a href="tel:+918429021972">Call +91 84290 21972</a>
+    <a href="tel:+919988443272">Call +91 99884 43272</a>
   </div>
   <header class="site-header">
     <div class="container">
@@ -172,8 +172,8 @@
             <a href="https://www.instagram.com/dr.asna_z_naqvi/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
             <a href="https://www.facebook.com/dr.asnaznaqvi" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
             <a href="https://www.youtube.com/@Dr.AsnaZehraNaqvi" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://wa.me/918429021972" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="tel:+918429021972" aria-label="Call"><i class="fa-solid fa-phone"></i></a>
+            <a href="https://wa.me/919988443272" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="tel:+919988443272" aria-label="Call"><i class="fa-solid fa-phone"></i></a>
           </div>
         </div>
         <div>
@@ -191,7 +191,7 @@
           <h4>Contact</h4>
           <ul class="foot-contact">
             <li><i class="fa-solid fa-location-dot"></i> Apollo Medics Hospitals, Sector B, LDA Colony, Kanpur&nbsp;&ndash;&nbsp;Lucknow Road, Lucknow, Uttar Pradesh 226012</li>
-            <li><i class="fa-solid fa-phone"></i> <a href="tel:+918429021972">+91 84290 21972</a></li>
+            <li><i class="fa-solid fa-phone"></i> <a href="tel:+919988443272">+91 99884 43272</a></li>
             <li><i class="fa-solid fa-clock"></i> Mon&ndash;Wed &amp; Fri&ndash;Sat, 9 AM&ndash;5 PM (Thu &amp; Sun closed)</li>
             <li><i class="fa-brands fa-instagram"></i> <a href="https://www.instagram.com/dr.asna_z_naqvi/" target="_blank" rel="noopener">@dr.asna_z_naqvi</a></li>
             <li><i class="fa-solid fa-globe"></i> <a href="https://www.apollohospitals.com" target="_blank" rel="noopener">apollohospitals.com</a></li>
@@ -211,8 +211,8 @@
 
   const floating = `
   <div class="floating">
-    <a class="call" href="tel:+918429021972" aria-label="Call now"><i class="fa-solid fa-phone"></i></a>
-    <a class="whatsapp" href="https://wa.me/918429021972" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    <a class="call" href="tel:+919988443272" aria-label="Call now"><i class="fa-solid fa-phone"></i></a>
+    <a class="whatsapp" href="https://wa.me/919988443272" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
   </div>`;
 
   const headerMount = document.getElementById("site-header-mount");
