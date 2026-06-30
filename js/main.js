@@ -194,6 +194,51 @@ document.addEventListener("DOMContentLoaded", function () {
   const yearEl = document.querySelector("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  /* ---------- Hero: entrance .play trigger + pointer depth parallax ---------- */
+  (function () {
+    const hero = document.querySelector(".hero");
+    if (!hero) return;
+    const heroReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const heroPlay = () => hero.classList.add("play");
+
+    /* Entrance: add .play once the hero is in view (it's above the fold,
+       so this fires on load). Safety net guarantees it within 1.2s. */
+    if (heroReduce || !("IntersectionObserver" in window)) {
+      heroPlay();
+    } else {
+      const hObs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { heroPlay(); hObs.unobserve(e.target); }
+        });
+      }, { threshold: 0.2 });
+      hObs.observe(hero);
+      setTimeout(() => { if (!hero.classList.contains("play")) heroPlay(); }, 1200);
+    }
+
+    /* Pointer-driven depth parallax (mouse only — skipped on touch to
+       avoid jitter, and disabled for reduced-motion). */
+    const stage = hero.querySelector(".hero-stage");
+    const photo = stage && stage.querySelector(".hero-photo");
+    const bPink = stage && stage.querySelector(".blob-pink");
+    const bTeal = stage && stage.querySelector(".blob-teal");
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    if (stage && photo && finePointer && !heroReduce) {
+      stage.addEventListener("pointermove", (e) => {
+        const r = stage.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        photo.style.transform = "rotateX(" + (-py * 7) + "deg) rotateY(" + (px * 7) + "deg)";
+        if (bPink) bPink.style.transform = "translate(" + (px * 20) + "px, " + (py * 20) + "px)";
+        if (bTeal) bTeal.style.transform = "translate(" + (-px * 16) + "px, " + (-py * 16) + "px)";
+      });
+      stage.addEventListener("pointerleave", () => {
+        photo.style.transform = "";
+        if (bPink) bPink.style.transform = "";
+        if (bTeal) bTeal.style.transform = "";
+      });
+    }
+  })();
+
   /* ---------- Get in Touch — timeline reveal (once on scroll-in) ---------- */
   const giSection = document.querySelector(".gi-section");
   if (giSection) {

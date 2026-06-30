@@ -185,33 +185,41 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
    All reduced-motion-aware; CSS-driven where possible.
    ============================================================ */
 
-/* ----- Hero choreography: staggered fade-up over the existing markup */
+/* ----- Hero choreography: depth-parallax entrance, gated by .play -----
+   Hidden until JS adds .play to .hero (the site already requires JS —
+   the header/footer are injected by includes.js — so this is safe).
+   Order: eyebrow -> heading -> gold rule -> subtitle -> checks -> button,
+   with the photo settling in like a depth layer + blobs fading behind. */
 @media (prefers-reduced-motion: no-preference) {
-  .hero .hero-text > * {
-    opacity: 0;
-    animation: lxHeroIn .8s cubic-bezier(.2,.8,.2,1) forwards;
-  }
-  .hero .hero-text > *:nth-child(1) { animation-delay: .10s; }
-  .hero .hero-text > *:nth-child(2) { animation-delay: .25s; }
-  .hero .hero-text > *:nth-child(3) { animation-delay: .55s; }
-  .hero .hero-text > *:nth-child(4) { animation-delay: .75s; }
-  .hero .hero-text > *:nth-child(5) { animation-delay: .95s; }
-  .hero .hero-text > *:nth-child(6) { animation-delay: 1.15s; }
+  .hero .hero-text > *      { opacity: 0; animation: none; }
+  .hero .hero-photo         { opacity: 0; animation: none; }
+  .hero-stage .blob-pink,
+  .hero-stage .blob-teal    { opacity: 0; }
+  .hero ul.credentials li   { opacity: 0; }
+  .hero h1::after           { transform: scaleX(0); transform-origin: left center; }
 
-  .hero .hero-photo {
-    opacity: 0;
-    clip-path: inset(0 0 100% 0);
-    transform: scale(1.05);
-    animation: lxPhotoReveal 1s cubic-bezier(.2,.8,.2,1) .5s forwards;
-  }
+  .hero.play .hero-rotator   { animation: lxHeroRise .7s cubic-bezier(.2,.85,.3,1) .05s forwards; }
+  .hero.play h1              { animation: lxHeroRise .8s cubic-bezier(.2,.85,.3,1) .22s forwards; }
+  .hero.play h1::after       { animation: lxHeroRule .7s cubic-bezier(.2,.8,.2,1) .58s forwards; }
+  .hero.play .hero-title-bar { animation: lxHeroRise .7s cubic-bezier(.2,.85,.3,1) .66s forwards; }
+  .hero.play ul.credentials  { opacity: 1; }
+  .hero.play ul.credentials li { animation: lxHeroPop .5s cubic-bezier(.34,1.4,.5,1) forwards; }
+  .hero.play ul.credentials li:nth-child(1) { animation-delay: .82s; }
+  .hero.play ul.credentials li:nth-child(2) { animation-delay: .90s; }
+  .hero.play ul.credentials li:nth-child(3) { animation-delay: .98s; }
+  .hero.play ul.credentials li:nth-child(4) { animation-delay: 1.06s; }
+  .hero.play ul.credentials li:nth-child(5) { animation-delay: 1.14s; }
+  .hero.play .btn--primary   { animation: lxHeroPop .55s cubic-bezier(.34,1.4,.5,1) 1.28s forwards; }
 
-  @keyframes lxHeroIn {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: none; }
-  }
-  @keyframes lxPhotoReveal {
-    to { opacity: 1; clip-path: inset(0 0 0 0); transform: scale(1); }
-  }
+  .hero.play .hero-photo  { animation: lxHeroPhoto 1s cubic-bezier(.2,.8,.2,1) .35s forwards; }
+  .hero.play .blob-pink   { animation: lxHeroFade .9s ease .15s forwards; }
+  .hero.play .blob-teal   { animation: lxHeroFade .9s ease .28s forwards; }
+
+  @keyframes lxHeroRise  { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  @keyframes lxHeroRule  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes lxHeroPop   { from { opacity: 0; transform: translateY(14px) scale(.92); } to { opacity: 1; transform: none; } }
+  @keyframes lxHeroPhoto { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: none; } }
+  @keyframes lxHeroFade  { from { opacity: 0; } to { opacity: 1; } }
 }
 
 /* ----- Floating decorative orbs behind hero (pure CSS, no markup needed) */
@@ -1459,4 +1467,80 @@ a.gi-value-link:hover { color: var(--gi-gold); }
                 border-color .25s ease, box-shadow .25s ease !important;
   }
   .gi-line { transform: scaleY(1) !important; transition: none !important; }
+}
+
+/* ============================================================
+   HERO — depth-parallax stage, blobs, Ken Burns, button hover
+   Markup: .hero-stage > .blob-pink, .blob-teal, .hero-photo > picture
+   Pointer parallax + .play trigger live in main.js. Content untouched.
+   ============================================================ */
+.hero-stage { position: relative; perspective: 900px; }
+
+/* the photo frame: tilts in 3D, contains the Ken Burns zoom */
+.hero-stage .hero-photo {
+  position: relative; z-index: 2;
+  overflow: hidden; border-radius: 20px;
+  box-shadow: var(--shadow);
+  transition: transform .25s cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
+}
+/* image fills the frame exactly as before (same size, no layout change) */
+.hero-stage .hero-photo img,
+.hero-stage .hero-photo .photo-placeholder {
+  width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block;
+  border-radius: inherit; box-shadow: none;
+}
+
+/* depth blobs behind the photo */
+.hero-stage .blob-pink,
+.hero-stage .blob-teal {
+  position: absolute; border-radius: 50%; z-index: 1;
+  pointer-events: none; filter: blur(34px);
+  transition: transform .25s cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
+}
+.hero-stage .blob-pink {
+  width: 58%; aspect-ratio: 1; top: -7%; right: -9%;
+  background: radial-gradient(circle, rgba(246,193,199,.60), transparent 70%);
+}
+.hero-stage .blob-teal {
+  width: 52%; aspect-ratio: 1; bottom: -8%; left: -8%;
+  background: radial-gradient(circle, rgba(15,107,110,.28), transparent 70%);
+}
+
+/* Book Appointment — lift + soft teal shadow on hover */
+.hero .hero-text .btn--primary {
+  transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out);
+}
+.hero .hero-text .btn--primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(15,107,110,.34);
+}
+
+/* Ken Burns — slow continuous zoom inside the frame */
+@media (prefers-reduced-motion: no-preference) {
+  .hero .hero-photo img { animation: lxKenBurns 16s ease-in-out infinite; }
+  @keyframes lxKenBurns {
+    0%, 100% { transform: scale(1.05); }
+    50%      { transform: scale(1.14); }
+  }
+}
+
+/* mobile: the stage becomes the stacked, centred column */
+@media (max-width: 700px) {
+  .hero-stage { order: -1; max-width: 380px; margin: 0 auto; }
+  .hero-stage .hero-photo { max-width: none; }
+}
+
+/* reduced motion: no parallax / Ken Burns / reveals — everything static */
+@media (prefers-reduced-motion: reduce) {
+  .hero .hero-text > *,
+  .hero .hero-photo,
+  .hero ul.credentials li,
+  .hero-stage .blob-pink,
+  .hero-stage .blob-teal {
+    opacity: 1 !important; transform: none !important; animation: none !important;
+  }
+  .hero h1::after { transform: none !important; animation: none !important; }
+  .hero .hero-photo img { animation: none !important; transform: none !important; }
 }
