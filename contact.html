@@ -11,9 +11,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css?v=2026062930" />
-  <link rel="stylesheet" href="css/premium.css?v=2026062930" />
-  <link rel="stylesheet" href="css/redesign.css?v=2026062930" />
+  <link rel="stylesheet" href="css/styles.css?v=2026062932" />
+  <link rel="stylesheet" href="css/premium.css?v=2026062932" />
+  <link rel="stylesheet" href="css/redesign.css?v=2026062932" />
 </head>
 <body data-page="contact" data-prefix="">
   <div id="site-header-mount"></div>
@@ -23,29 +23,81 @@
     <p class="breadcrumb"><a href="index.html">Home</a> / Contact</p>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="about-grid">
-        <div>
-          <h2>Get in Touch</h2>
-          <p>For appointments, queries or follow-ups, reach out using any of the details below. For medical emergencies, please call directly.</p>
-          <ul class="credentials" style="margin-top:20px;">
-            <li><i class="fa-solid fa-location-dot" style="color:var(--primary);"></i> Apollomedics Super Speciality Hospitals, Sector B, LDA Colony, Kanpur Road, Lucknow, Uttar Pradesh 226012</li>
-            <li><i class="fa-solid fa-phone" style="color:var(--primary);"></i> <a href="tel:+918429021972">+91 84290 21972</a></li>
-            <li><i class="fa-brands fa-whatsapp" style="color:var(--green);"></i> <a href="https://wa.me/918429021972" target="_blank" rel="noopener">Chat on WhatsApp</a></li>
-            <li><i class="fa-solid fa-clock" style="color:var(--primary);"></i> Mon–Wed &amp; Fri–Sat, 9 AM – 5 PM (Thu &amp; Sun closed)</li>
-            <li><i class="fa-solid fa-indian-rupee-sign" style="color:var(--primary);"></i> Consultation: ₹800 in-person · ₹1,000 online (Apollo 24|7)</li>
-            <li><i class="fa-solid fa-globe" style="color:var(--primary);"></i> <a href="https://www.apollohospitals.com" target="_blank" rel="noopener">apollohospitals.com</a></li>
-            <li><i class="fa-solid fa-user-doctor" style="color:var(--primary);"></i> <a href="https://www.apollo247.com/doctors/dr-asna-zehra-naqvi-5a77eea8-2715-47b3-a2c4-f0ff93fd33ca" target="_blank" rel="noopener">Book via Apollo 24|7</a></li>
-            <li><i class="fa-brands fa-instagram" style="color:var(--primary);"></i> <a href="https://www.instagram.com/dr.asna_z_naqvi/" target="_blank" rel="noopener">@dr.asna_z_naqvi</a></li>
-            <li><i class="fa-brands fa-facebook" style="color:var(--primary);"></i> <a href="https://www.facebook.com/dr.asnaznaqvi" target="_blank" rel="noopener">/dr.asnaznaqvi</a></li>
-            <li><i class="fa-brands fa-youtube" style="color:var(--primary);"></i> <a href="https://www.youtube.com/@Dr.AsnaZehraNaqvi" target="_blank" rel="noopener">@Dr.AsnaZehraNaqvi</a></li>
-          </ul>
-          <a class="btn btn--primary" style="margin-top:16px;" target="_blank" rel="noopener"
-             href="https://www.google.com/maps/search/?api=1&query=Apollomedics+Super+Speciality+Hospitals+Lucknow">
-            <i class="fa-solid fa-diamond-turn-right"></i> Get Directions
-          </a>
-        </div>
+  <!-- ===== Get in Touch — timeline over map background ===== -->
+  <section class="gi-section" aria-label="Get in touch">
+    <iframe class="gi-map" title="Dr. Asna Zehra Naqvi clinic location map"
+            src="https://www.google.com/maps?q=26.797939,80.9015426&amp;z=16&amp;output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="gi-tint" aria-hidden="true"></div>
+
+    <div class="gi-inner">
+      <div class="gi-panel">
+        <p class="gi-eyebrow">Contact</p>
+        <h2 class="gi-heading">Get in Touch</h2>
+        <p class="gi-intro">For appointments, queries or follow-ups, reach out using any of the details below. For medical emergencies, please call directly.</p>
+
+        <ol class="gi-timeline">
+          <span class="gi-line" aria-hidden="true"></span>
+
+          <li class="gi-item" style="--i:0;">
+            <span class="gi-node"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></span>
+            <div class="gi-itemtext">
+              <p class="gi-label">Visit Us</p>
+              <p class="gi-value">Apollomedics Super Speciality Hospitals, Sector B, LDA Colony, Kanpur Road, Lucknow, Uttar Pradesh 226012</p>
+            </div>
+          </li>
+
+          <li class="gi-item" style="--i:1;">
+            <span class="gi-node"><i class="fa-solid fa-phone" aria-hidden="true"></i></span>
+            <div class="gi-itemtext">
+              <p class="gi-label">Call Directly</p>
+              <a class="gi-value gi-value-link" href="tel:+918429021972">+91 84290 21972</a>
+            </div>
+          </li>
+
+          <li class="gi-item" style="--i:2;">
+            <span class="gi-node"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></span>
+            <div class="gi-itemtext">
+              <p class="gi-label">WhatsApp</p>
+              <a class="gi-value gi-value-link" href="https://wa.me/918429021972" target="_blank" rel="noopener">Chat on WhatsApp</a>
+            </div>
+          </li>
+
+          <li class="gi-item" style="--i:3;">
+            <span class="gi-node"><i class="fa-solid fa-clock" aria-hidden="true"></i></span>
+            <div class="gi-itemtext">
+              <p class="gi-label">Clinic Hours</p>
+              <p class="gi-value">Mon–Wed &amp; Fri–Sat · 9 AM – 5 PM (Thu &amp; Sun closed)</p>
+            </div>
+          </li>
+
+          <li class="gi-item" style="--i:4;">
+            <span class="gi-node"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i></span>
+            <div class="gi-itemtext">
+              <p class="gi-label">Book Online</p>
+              <a class="gi-value gi-value-link" href="https://www.apollo247.com/doctors/dr-asna-zehra-naqvi-5a77eea8-2715-47b3-a2c4-f0ff93fd33ca" target="_blank" rel="noopener">Book via Apollo 24|7 · apollohospitals.com</a>
+            </div>
+          </li>
+
+          <li class="gi-item" style="--i:5;">
+            <span class="gi-node"><i class="fa-brands fa-instagram" aria-hidden="true"></i></span>
+            <div class="gi-itemtext">
+              <p class="gi-label">Follow</p>
+              <a class="gi-value gi-value-link" href="https://www.instagram.com/dr.asna_z_naqvi/" target="_blank" rel="noopener">@dr.asna_z_naqvi</a>
+              <div class="gi-socials">
+                <a class="gi-social" href="https://www.instagram.com/dr.asna_z_naqvi/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                <a class="gi-social" href="https://www.facebook.com/dr.asnaznaqvi" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+                <a class="gi-social" href="https://www.youtube.com/@Dr.AsnaZehraNaqvi" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <a class="gi-cta" style="--i:6;" target="_blank" rel="noopener"
+           href="https://www.google.com/maps/dir/?api=1&amp;destination=Apollomedics+Super+Speciality+Hospitals+Sector+B+LDA+Colony+Kanpur+Road+Lucknow">
+          <span>Get Directions</span>
+          <i class="fa-solid fa-arrow-right gi-cta-arrow" aria-hidden="true"></i>
+        </a>
       </div>
     </div>
   </section>
@@ -63,20 +115,8 @@
     </div>
   </section>
 
-  <section class="section section--lavender" style="padding-top:0;background:#fff;">
-    <div class="container">
-      <div style="border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-soft);">
-        <iframe
-          title="Dr. Asna Zehra Naqvi location map"
-          src="https://www.google.com/maps?q=26.797939,80.9015426&z=17&output=embed"
-          width="100%" height="380" style="border:0;display:block;" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-    </div>
-  </section>
-
   <div id="site-footer-mount"></div>
-  <script src="js/includes.js?v=2026062930"></script>
-  <script src="js/main.js?v=2026062930"></script>
+  <script src="js/includes.js?v=2026062932"></script>
+  <script src="js/main.js?v=2026062932"></script>
 </body>
 </html>

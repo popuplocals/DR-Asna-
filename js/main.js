@@ -194,6 +194,31 @@ document.addEventListener("DOMContentLoaded", function () {
   const yearEl = document.querySelector("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  /* ---------- Get in Touch — timeline reveal (once on scroll-in) ---------- */
+  const giSection = document.querySelector(".gi-section");
+  if (giSection) {
+    const giReveal = () => giSection.classList.add("gi-in");
+    const giReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (giReduce || !("IntersectionObserver" in window)) {
+      giReveal();
+    } else {
+      const giObs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            giReveal();
+            giObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      giObs.observe(giSection);
+      /* Safety net: never leave the contact section invisible if the
+         observer somehow never fires (reveals within 1.6s worst-case). */
+      setTimeout(() => {
+        if (!giSection.classList.contains("gi-in")) giReveal();
+      }, 1600);
+    }
+  }
+
   /* ---------- Gallery lightbox ---------- */
   const galleryGrid = document.querySelector(".gallery-grid");
   if (galleryGrid) {
