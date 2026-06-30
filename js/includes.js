@@ -153,7 +153,7 @@
           <span class="logo-tag">Senior Consultant, Obstetrics &amp; Gynaecology</span>
         </span>
       </a>
-      <nav class="main-nav" aria-label="Primary"><ul>${navLinks}</ul></nav>
+      <nav class="main-nav" aria-label="Primary"><ul><span class="nav-glider" aria-hidden="true"></span>${navLinks}</ul></nav>
       <div class="header-cta">
         <a href="https://www.apollo247.com/doctors/dr-asna-zehra-naqvi-5a77eea8-2715-47b3-a2c4-f0ff93fd33ca" target="_blank" rel="noopener" class="btn btn--primary">Book Appointment</a>
         <button class="hamburger" aria-label="Open menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
@@ -219,4 +219,54 @@
   const footerMount = document.getElementById("site-footer-mount");
   if (headerMount) headerMount.innerHTML = header;
   if (footerMount) footerMount.innerHTML = footer + floating;
+
+  /* ---------- Nav glider: sliding pill under the active / hovered link ---------- */
+  (function initNavGlider() {
+    const nav = document.querySelector(".main-nav");
+    if (!nav) return;
+    const ul = nav.querySelector("ul");
+    const glider = nav.querySelector(".nav-glider");
+    if (!ul || !glider) return;
+    const topLinks = Array.from(ul.querySelectorAll(":scope > li > a"));
+    if (!topLinks.length) return;
+
+    const desktop = () => window.matchMedia("(min-width: 821px)").matches;
+    const activeLink = () => topLinks.find((a) => a.classList.contains("active")) || null;
+
+    function moveTo(link, animate) {
+      if (!link) { glider.style.opacity = "0"; return; }
+      const pad = 14;
+      /* rect-relative to the <ul> — robust even when a link's offsetParent
+         is a positioned ancestor (e.g. the .has-dropdown Services item) */
+      const ulRect = ul.getBoundingClientRect();
+      const r = link.getBoundingClientRect();
+      const left = r.left - ulRect.left;
+      if (!animate) glider.style.transition = "none";
+      glider.style.opacity = "1";
+      glider.style.width = (r.width + pad * 2) + "px";
+      glider.style.transform = "translate(" + (left - pad) + "px, -50%)";
+      if (!animate) { void glider.offsetWidth; glider.style.transition = ""; }
+    }
+    const reset = () => moveTo(activeLink(), true);
+
+    function apply() {
+      if (desktop()) {
+        nav.classList.add("has-glider");
+        moveTo(activeLink(), false);
+      } else {
+        nav.classList.remove("has-glider");
+        glider.style.opacity = "0";
+      }
+    }
+
+    topLinks.forEach((link) => {
+      link.addEventListener("mouseenter", () => { if (desktop()) moveTo(link, true); });
+      link.addEventListener("focus", () => { if (desktop()) moveTo(link, true); });
+    });
+    nav.addEventListener("mouseleave", () => { if (desktop()) reset(); });
+    window.addEventListener("resize", apply);
+    window.addEventListener("load", apply);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
+    apply();
+  })();
 })();
