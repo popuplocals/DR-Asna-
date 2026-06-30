@@ -3,6 +3,36 @@
    ========================================================================== */
 document.addEventListener("DOMContentLoaded", function () {
 
+  /* ---------- Smooth scroll (Lenis) — site-wide on every page ----------
+     Desktop wheel glide; native touch on mobile; reduced-motion-aware. */
+  (function () {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.__lenis) return;                         // never double-init
+    var s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js";
+    s.onload = function () {
+      if (typeof Lenis === "undefined") return;
+      var lenis = new Lenis({
+        duration: 1.2,
+        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        smoothWheel: true
+      });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest('a[href^="#"]');
+        if (!a) return;
+        var id = a.getAttribute("href");
+        if (id.length > 1 && document.querySelector(id)) {
+          e.preventDefault();
+          lenis.scrollTo(id, { offset: -90 });
+        }
+      });
+      window.__lenis = lenis;
+    };
+    document.head.appendChild(s);
+  })();
+
   /* ---------- Mobile nav / hamburger ---------- */
   const hamburger = document.querySelector(".hamburger");
   const nav = document.querySelector(".main-nav");
