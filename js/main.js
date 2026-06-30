@@ -269,6 +269,59 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   })();
 
+  /* ---------- About bento — staggered tile reveal + 10+ count-up ---------- */
+  (function () {
+    const grid = document.querySelector(".bento-grid");
+    if (!grid) return;
+    const tiles = Array.from(grid.querySelectorAll(".bento-tile"));
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const statEl = grid.querySelector(".bento-stat-num[data-count]");
+
+    function countUp(el) {
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || "";
+      const dur = 1300, t0 = performance.now();
+      (function step(now) {
+        const p = Math.min(1, (now - t0) / dur);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target + suffix;
+      })(t0);
+    }
+
+    if (reduce || !("IntersectionObserver" in window)) {
+      tiles.forEach((t) => t.classList.add("in"));
+      return;
+    }
+
+    /* reveal: when the grid scrolls in, stagger .in across the tiles (~.09s each) */
+    let bentoRevealed = false;
+    const revealTiles = () => {
+      if (bentoRevealed) return;
+      bentoRevealed = true;
+      tiles.forEach((t, i) => setTimeout(() => t.classList.add("in"), i * 90));
+    };
+    const gObs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { revealTiles(); gObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    gObs.observe(grid);
+    /* Safety net: never leave the About tiles invisible if the
+       observer never fires (reveals within 1.6s worst-case). */
+    setTimeout(revealTiles, 1600);
+
+    /* count up the 10+ stat when its tile enters view */
+    if (statEl) {
+      const sObs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { countUp(statEl); sObs.unobserve(e.target); }
+        });
+      }, { threshold: 0.5 });
+      sObs.observe(statEl);
+    }
+  })();
+
   /* ---------- Get in Touch — timeline reveal (once on scroll-in) ---------- */
   const giSection = document.querySelector(".gi-section");
   if (giSection) {

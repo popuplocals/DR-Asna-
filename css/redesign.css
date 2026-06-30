@@ -1544,3 +1544,174 @@ a.gi-value-link:hover { color: var(--gi-gold); }
   .hero h1::after { transform: none !important; animation: none !important; }
   .hero .hero-photo img { animation: none !important; transform: none !important; }
 }
+
+/* ============================================================
+   ABOUT — premium bento grid (about.html). Brand-locked tokens,
+   Font Awesome icons. Reveal + count-up driven by main.js.
+   ============================================================ */
+.about-bento .bento-head { text-align: center; margin-bottom: 40px; }
+.about-bento .bento-eyebrow {
+  display: inline-block; font-family: var(--font-body);
+  font-weight: 600; font-size: .78rem; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--gold-line); margin-bottom: 10px;
+}
+.about-bento .bento-head h2 {
+  font-family: var(--font-display); color: var(--accent-deep); margin: 0;
+}
+
+.bento-grid {
+  display: grid; gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    'qual exp  exp'
+    'qual phil phil'
+    'expert phil phil'
+    'expert res  res';
+}
+.tile-qual   { grid-area: qual; }
+.tile-exp    { grid-area: exp; }
+.tile-phil   { grid-area: phil; }
+.tile-expert { grid-area: expert; }
+.tile-res    { grid-area: res; }
+
+/* ---- tile shell ---- */
+.bento-tile {
+  position: relative; overflow: hidden;
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 20px; padding: 28px;
+  box-shadow: 0 10px 30px rgba(15,107,110,.06);
+  opacity: 0; transform: translateY(26px) scale(.98);
+  transition:
+    opacity .6s cubic-bezier(.2,.8,.2,1),
+    transform .55s cubic-bezier(.2,.8,.2,1),
+    box-shadow .35s cubic-bezier(.2,.8,.2,1);
+}
+.bento-tile.in { opacity: 1; transform: none; }
+.bento-tile.in:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 26px 54px rgba(15,107,110,.16);
+}
+
+/* accent bar draws across the top on hover */
+.tile-bar {
+  position: absolute; top: 0; left: 0; height: 4px; width: 100%; z-index: 3;
+  background: linear-gradient(90deg, var(--primary), var(--gold-line));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .5s cubic-bezier(.2,.8,.2,1);
+}
+.bento-tile:hover .tile-bar { transform: scaleX(1); }
+
+/* faint dot-grid in the top-right corner */
+.tile-dots {
+  position: absolute; top: 16px; right: 16px; width: 72px; height: 72px;
+  pointer-events: none; border-radius: 8px;
+  color: rgba(15,107,110,.16);
+  background-image: radial-gradient(currentColor 1.4px, transparent 1.6px);
+  background-size: 12px 12px;
+}
+
+/* icon chip */
+.tile-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: grid; place-items: center; position: relative; z-index: 2;
+  background: rgba(15,107,110,.10); color: var(--primary);
+  font-size: 1.2rem; margin-bottom: 16px;
+  transition: background-color .3s cubic-bezier(.2,.8,.2,1),
+              color .3s cubic-bezier(.2,.8,.2,1),
+              transform .4s cubic-bezier(.34,1.4,.5,1);
+}
+.bento-tile:hover .tile-icon {
+  background: var(--primary); color: #fff;
+  transform: scale(1.08) rotate(-6deg);
+}
+
+.tile-label {
+  font-family: var(--font-body); font-weight: 600; font-size: .7rem;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--gold-line);
+  margin: 0 0 4px; position: relative; z-index: 2;
+}
+.tile-title {
+  font-family: var(--font-display); color: var(--accent-deep);
+  font-size: 1.3rem; margin: 0 0 16px; position: relative; z-index: 2;
+}
+
+/* lists with per-item mini icon chips */
+.tile-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 11px; position: relative; z-index: 2; }
+.tile-list li {
+  display: grid; grid-template-columns: 26px 1fr; gap: 11px; align-items: start;
+  font-size: .93rem; color: var(--text); line-height: 1.45;
+}
+.tile-list li strong { color: var(--accent-deep); font-weight: 600; }
+.li-chip {
+  width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center;
+  background: rgba(198,167,94,.16); color: #9a7b33; font-size: .72rem; margin-top: 1px;
+}
+.tile-list--papers li { font-size: .88rem; }
+
+/* experience stat + pills */
+.bento-stat { display: flex; align-items: baseline; gap: 9px; margin-bottom: 8px; position: relative; z-index: 2; }
+.bento-stat-num { font-family: var(--font-display); font-weight: 700; font-size: 3rem; line-height: 1; color: var(--primary); }
+.bento-stat-unit { font-family: var(--font-body); font-weight: 600; letter-spacing: .12em; font-size: .8rem; color: var(--muted); text-transform: uppercase; }
+.bento-stat-line { font-size: .92rem; color: var(--text); line-height: 1.55; margin: 0; position: relative; z-index: 2; }
+.bento-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; position: relative; z-index: 2; }
+.bento-pill {
+  font-size: .74rem; font-weight: 600; letter-spacing: .03em; padding: 5px 12px; border-radius: 999px;
+  background: rgba(15,107,110,.08); color: var(--primary); border: 1px solid rgba(15,107,110,.16);
+}
+.bento-pill i { font-size: .66rem; opacity: .8; margin-right: 3px; }
+
+/* research count pill */
+.count-pill {
+  display: inline-flex; align-items: center; gap: 7px; margin-bottom: 14px;
+  padding: 6px 14px; border-radius: 999px; position: relative; z-index: 2;
+  background: rgba(198,167,94,.16); color: #9a7b33; font-weight: 700; font-size: .85rem;
+}
+
+/* philosophy feature tile */
+.tile-phil {
+  background: linear-gradient(140deg, #15776E, #0C4641);
+  border: none; color: #fff;
+  display: flex; flex-direction: column; justify-content: center;
+  box-shadow: 0 16px 40px rgba(8,60,62,.28);
+}
+.tile-phil .phil-quote-mark {
+  font-family: var(--font-display); font-size: 4.6rem; line-height: .6;
+  color: var(--gold-line); margin-bottom: 4px; position: relative; z-index: 2;
+}
+.tile-phil .phil-text {
+  font-family: var(--font-display); font-style: italic; font-size: 1.4rem;
+  line-height: 1.5; color: #fff; margin: 0 0 20px; position: relative; z-index: 2;
+}
+.tile-phil .phil-sign {
+  font-family: var(--font-body); font-weight: 600; letter-spacing: .1em;
+  font-size: .82rem; text-transform: uppercase; color: var(--gold-line);
+  position: relative; z-index: 2;
+}
+.tile-phil .tile-dots { color: rgba(255,255,255,.16); }
+.tile-phil .tile-bar { background: linear-gradient(90deg, var(--gold-line), #E7C77A); }
+
+/* responsive: 3-col bento -> 2-col -> 1-col */
+@media (max-width: 900px) {
+  .bento-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'exp exp'
+      'qual phil'
+      'expert phil'
+      'res res';
+  }
+}
+@media (max-width: 600px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'qual' 'exp' 'phil' 'expert' 'res';
+  }
+  .bento-stat-num { font-size: 2.6rem; }
+}
+
+/* reduced motion: everything static */
+@media (prefers-reduced-motion: reduce) {
+  .bento-tile { opacity: 1 !important; transform: none !important; transition: box-shadow .3s ease; }
+  .bento-tile .tile-bar,
+  .bento-tile .tile-icon { transition: none !important; }
+}

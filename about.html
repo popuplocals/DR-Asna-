@@ -11,9 +11,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css?v=2026062936" />
-  <link rel="stylesheet" href="css/premium.css?v=2026062936" />
-  <link rel="stylesheet" href="css/redesign.css?v=2026062936" />
+  <link rel="stylesheet" href="css/styles.css?v=2026062938" />
+  <link rel="stylesheet" href="css/premium.css?v=2026062938" />
+  <link rel="stylesheet" href="css/redesign.css?v=2026062938" />
 </head>
 <body data-page="about" data-prefix="">
   <div id="site-header-mount"></div>
@@ -39,78 +39,92 @@
     </div>
   </section>
 
-  <section class="section section--lavender">
-    <div class="container about-blocks">
+  <section class="section section--lavender about-bento">
+    <div class="container">
+      <div class="bento-head">
+        <span class="bento-eyebrow">Know Your Doctor</span>
+        <h2>About Dr. Asna Zehra Naqvi</h2>
+      </div>
 
-      <article class="about-block reveal-left">
-        <div class="about-block-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-        <div class="about-block-body">
-          <h2>Qualifications</h2>
-          <ul>
-            <li><strong>MBBS</strong> — IMS, Banaras Hindu University (BHU), Varanasi</li>
-            <li><strong>MS</strong> — Obstetrics &amp; Gynaecology</li>
-            <li><strong>MRCOG (London)</strong> — Member, Royal College of Obstetricians &amp; Gynaecologists</li>
-            <li><strong>Diploma in IVF &amp; Reproductive Medicine</strong></li>
+      <div class="bento-grid">
+
+        <!-- Qualifications -->
+        <article class="bento-tile tile-qual" style="--i:0">
+          <span class="tile-bar" aria-hidden="true"></span>
+          <span class="tile-dots" aria-hidden="true"></span>
+          <div class="tile-icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></div>
+          <p class="tile-label">Education</p>
+          <h3 class="tile-title">Qualifications</h3>
+          <ul class="tile-list">
+            <li><span class="li-chip"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i></span> <span><strong>MBBS</strong> — IMS, Banaras Hindu University (BHU), Varanasi</span></li>
+            <li><span class="li-chip"><i class="fa-solid fa-certificate" aria-hidden="true"></i></span> <span><strong>MS</strong> — Obstetrics &amp; Gynaecology</span></li>
+            <li><span class="li-chip"><i class="fa-solid fa-award" aria-hidden="true"></i></span> <span><strong>MRCOG (London)</strong> — Royal College of Obstetricians &amp; Gynaecologists</span></li>
+            <li><span class="li-chip"><i class="fa-solid fa-dna" aria-hidden="true"></i></span> <span><strong>Diploma in IVF &amp; Reproductive Medicine</strong></span></li>
           </ul>
-          <p style="color:var(--muted);font-size:.92rem;">Medical Registration: UPMC&nbsp;–&nbsp;64518 &nbsp;|&nbsp; Languages: English, Hindi &nbsp;|&nbsp; Consultation: ₹800 (in-person) · ₹1,000 (online)</p>
-        </div>
-      </article>
+        </article>
 
-      <article class="about-block reveal-right">
-        <div class="about-block-icon"><i class="fa-solid fa-briefcase-medical"></i></div>
-        <div class="about-block-body">
-          <h2>Experience</h2>
-          <ul>
-            <li>Senior Consultant, Obstetrics &amp; Gynaecology — Apollomedics Super Speciality Hospitals, Lucknow</li>
-            <li>Part of the Apollomedics Institute of Mother &amp; Child Care</li>
-            <li>10+ years of clinical experience across India &amp; the UK (incl. 6+ years in the UK NHS)</li>
-            <li>Formerly at University Hospital Schleswig-Holstein, Germany</li>
-            <li>Alumna, IMS – BHU, Varanasi</li>
+        <!-- Experience -->
+        <article class="bento-tile tile-exp" style="--i:1">
+          <span class="tile-bar" aria-hidden="true"></span>
+          <span class="tile-dots" aria-hidden="true"></span>
+          <div class="tile-icon"><i class="fa-solid fa-briefcase-medical" aria-hidden="true"></i></div>
+          <p class="tile-label">Career</p>
+          <h3 class="tile-title">Experience</h3>
+          <div class="bento-stat">
+            <span class="bento-stat-num" data-count="10" data-suffix="+">10+</span>
+            <span class="bento-stat-unit">Years</span>
+          </div>
+          <p class="bento-stat-line">Senior Consultant, Obstetrics &amp; Gynaecology — Apollomedics Super Speciality Hospitals, Lucknow. 10+ years across India &amp; the UK, including 6+ years in the UK NHS.</p>
+          <div class="bento-pills">
+            <span class="bento-pill"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> India</span>
+            <span class="bento-pill"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> UK · NHS</span>
+            <span class="bento-pill"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Germany</span>
+          </div>
+        </article>
+
+        <!-- Philosophy (feature) -->
+        <article class="bento-tile tile-phil" style="--i:2">
+          <span class="tile-bar" aria-hidden="true"></span>
+          <span class="tile-dots" aria-hidden="true"></span>
+          <span class="phil-quote-mark" aria-hidden="true">&ldquo;</span>
+          <p class="phil-text">Great medicine begins with listening. She takes time to understand each patient's history and concerns, explains every option clearly, and builds a treatment plan that respects each woman's individual needs and comfort.</p>
+          <p class="phil-sign">— Dr. Asna Zehra Naqvi</p>
+        </article>
+
+        <!-- Expertise -->
+        <article class="bento-tile tile-expert" style="--i:3">
+          <span class="tile-bar" aria-hidden="true"></span>
+          <span class="tile-dots" aria-hidden="true"></span>
+          <div class="tile-icon"><i class="fa-solid fa-stethoscope" aria-hidden="true"></i></div>
+          <p class="tile-label">Specialities</p>
+          <h3 class="tile-title">Areas of Expertise</h3>
+          <ul class="tile-list">
+            <li><span class="li-chip"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span> <span>High-risk pregnancy management</span></li>
+            <li><span class="li-chip"><i class="fa-solid fa-droplet" aria-hidden="true"></i></span> <span>Menstrual disorders, PCOS &amp; fibroids</span></li>
+            <li><span class="li-chip"><i class="fa-solid fa-scissors" aria-hidden="true"></i></span> <span>Minimally invasive (laparoscopic) gynaecological surgery</span></li>
+            <li><span class="li-chip"><i class="fa-solid fa-dna" aria-hidden="true"></i></span> <span>Infertility evaluation and reproductive medicine / IVF</span></li>
+            <li><span class="li-chip"><i class="fa-solid fa-venus" aria-hidden="true"></i></span> <span>Menopausal &amp; adolescent gynaecology</span></li>
+            <li><span class="li-chip"><i class="fa-solid fa-ribbon" aria-hidden="true"></i></span> <span>Preventive oncology &amp; cancer screening</span></li>
           </ul>
-        </div>
-      </article>
+        </article>
 
-      <article class="about-block reveal-left">
-        <div class="about-block-icon"><i class="fa-solid fa-stethoscope"></i></div>
-        <div class="about-block-body">
-          <h2>Areas of Expertise</h2>
-          <ul>
-            <li>High-risk pregnancy management</li>
-            <li>Menstrual disorders, PCOS &amp; fibroids</li>
-            <li>Minimally invasive (laparoscopic) gynaecological surgery</li>
-            <li>Infertility evaluation and reproductive medicine / IVF</li>
-            <li>Menopausal &amp; adolescent gynaecology</li>
-            <li>Preventive oncology &amp; cancer screening</li>
+        <!-- Research & Publications -->
+        <article class="bento-tile tile-res" style="--i:4">
+          <span class="tile-bar" aria-hidden="true"></span>
+          <span class="tile-dots" aria-hidden="true"></span>
+          <div class="tile-icon"><i class="fa-solid fa-book-medical" aria-hidden="true"></i></div>
+          <p class="tile-label">Academic</p>
+          <h3 class="tile-title">Research &amp; Publications</h3>
+          <span class="count-pill"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> 9+ papers</span>
+          <ul class="tile-list tile-list--papers">
+            <li><span class="li-chip"><i class="fa-solid fa-flask" aria-hidden="true"></i></span> <span>Role of 17α-Hydroxy Progesterone Caproate in Preventing Pre-term Labour — MS Dissertation, BHU</span></li>
+            <li><span class="li-chip"><i class="fa-solid fa-file-medical" aria-hidden="true"></i></span> <span>LSCS Notes Audit — Int. J. of Reproduction, Contraception, Obstetrics &amp; Gynecology, 2015</span></li>
+            <li><span class="li-chip"><i class="fa-solid fa-file-medical" aria-hidden="true"></i></span> <span>Postoperative Pain Audit — Int. J. of Pharmaceutical &amp; Clinical Research, 2023</span></li>
+            <li><span class="li-chip"><i class="fa-solid fa-trophy" aria-hidden="true"></i></span> <span>Poster — RCOG Virtual World Congress 2021 · Oral — AICOG 2016</span></li>
           </ul>
-        </div>
-      </article>
+        </article>
 
-      <article class="about-block reveal-right">
-        <div class="about-block-icon"><i class="fa-solid fa-book-medical"></i></div>
-        <div class="about-block-body">
-          <h2>Research &amp; Publications</h2>
-          <p>Dr. Asna actively contributes to medical research and academic conferences, keeping her care evidence-based and current.</p>
-          <ul>
-            <li>Role of 17α-Hydroxy Progesterone Caproate in Preventing Pre-term Labour — MS Dissertation, BHU</li>
-            <li>LSCS Notes Audit — Int. J. of Reproduction, Contraception, Obstetrics &amp; Gynecology, 2015</li>
-            <li>Intra-Vesical Clot during Pregnancy — Obstetrics &amp; Gynecology International Journal, 2015</li>
-            <li>Mal-Aligned Uterus in Previous Classical Caesarean Section — Paripex Indian Journal of Research, 2015</li>
-            <li>Postoperative Pain Audit — Int. J. of Pharmaceutical &amp; Clinical Research, 2023</li>
-            <li>Civility in Healthcare — Int. J. of Academic Medicine &amp; Pharmacy, 2023</li>
-            <li>Layered vs Retention Closure in Midline Laparotomy — Int. J. of Life Sciences, Biotechnology &amp; Pharma Research, 2023</li>
-            <li>Poster — RCOG Virtual World Congress 2021 · Oral — AICOG 2016 · Poster — 19th World Congress on Clinical Nutrition 2015</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="about-block reveal-left">
-        <div class="about-block-icon"><i class="fa-solid fa-heart"></i></div>
-        <div class="about-block-body">
-          <h2>Philosophy of Care</h2>
-          <p>Dr. Asna believes that great medicine begins with listening. She takes time to understand each patient's history and concerns, explains every option clearly, and builds a treatment plan that respects each woman's individual needs and comfort.</p>
-        </div>
-      </article>
-
+      </div>
     </div>
   </section>
 
@@ -156,7 +170,7 @@
   </section>
 
   <div id="site-footer-mount"></div>
-  <script src="js/includes.js?v=2026062936"></script>
-  <script src="js/main.js?v=2026062936"></script>
+  <script src="js/includes.js?v=2026062938"></script>
+  <script src="js/main.js?v=2026062938"></script>
 </body>
 </html>
