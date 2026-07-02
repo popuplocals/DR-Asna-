@@ -356,7 +356,7 @@ p { margin: 0 0 1rem; }
 .site-footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
 .site-footer a:hover { color: var(--primary-light); }
 .site-footer .foot-contact li { display: flex; gap: 10px; align-items: flex-start; }
-.site-footer .foot-contact i { color: var(--primary); margin-top: 4px; }
+.site-footer .foot-contact i { color: var(--gold); margin-top: 4px; }
 .site-footer .foot-map { margin-top: 18px; box-shadow: 0 8px 22px rgba(0,0,0,.22); border-radius: 12px; overflow: hidden; }
 .site-footer .socials { display: flex; gap: 12px; margin-top: 16px; }
 .site-footer .socials a {
