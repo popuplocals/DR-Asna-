@@ -190,11 +190,11 @@
         <div>
           <h4>Contact</h4>
           <ul class="foot-contact">
-            <li><i class="fa-solid fa-location-dot"></i> Apollo Medics Hospitals, Sector B, LDA Colony, Kanpur&nbsp;&ndash;&nbsp;Lucknow Road, Lucknow, Uttar Pradesh 226012</li>
-            <li><i class="fa-solid fa-phone"></i> <a href="tel:+919988443272">+91 99884 43272</a></li>
-            <li><i class="fa-solid fa-clock"></i> Mon&ndash;Wed &amp; Fri&ndash;Sat, 9 AM&ndash;5 PM (Thu &amp; Sun closed)</li>
-            <li><i class="fa-brands fa-instagram"></i> <a href="https://www.instagram.com/dr.asna_z_naqvi/" target="_blank" rel="noopener">@dr.asna_z_naqvi</a></li>
-            <li><i class="fa-solid fa-globe"></i> <a href="https://www.apollohospitals.com" target="_blank" rel="noopener">apollohospitals.com</a></li>
+            <li><span class="foot-icon"><i class="fa-solid fa-location-dot"></i></span> Apollo Medics Hospitals, Sector B, LDA Colony, Kanpur&nbsp;&ndash;&nbsp;Lucknow Road, Lucknow, Uttar Pradesh 226012</li>
+            <li><span class="foot-icon"><i class="fa-solid fa-phone"></i></span> <a href="tel:+919988443272">+91 99884 43272</a></li>
+            <li><span class="foot-icon"><i class="fa-solid fa-clock"></i></span> Mon&ndash;Wed &amp; Fri&ndash;Sat, 9 AM&ndash;5 PM (Thu &amp; Sun closed)</li>
+            <li><span class="foot-icon"><i class="fa-brands fa-instagram"></i></span> <a href="https://www.instagram.com/dr.asna_z_naqvi/" target="_blank" rel="noopener">@dr.asna_z_naqvi</a></li>
+            <li><span class="foot-icon"><i class="fa-solid fa-globe"></i></span> <a href="https://www.apollohospitals.com" target="_blank" rel="noopener">apollohospitals.com</a></li>
           </ul>
           <div class="foot-map">
             <iframe

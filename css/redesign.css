@@ -953,6 +953,17 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .foot-contact li:hover {
   transform: translateX(5px);
 }
+.foot-contact .foot-icon {
+  transition:
+    transform  .45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background .3s  var(--ease-out),
+    box-shadow .35s var(--ease-out);
+}
+.foot-contact li:hover .foot-icon {
+  transform: scale(1.15);
+  background: var(--primary) !important;
+  box-shadow: 0 6px 16px rgba(15, 107, 110, 0.38);
+}
 
 /* ============================================================
    KYD PHOTO FRAME — enlarged: 320×428px desktop / 275×368px mobile
