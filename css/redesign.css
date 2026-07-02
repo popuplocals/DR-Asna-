@@ -1319,6 +1319,7 @@ html.lenis, .lenis.lenis-smooth { scroll-behavior: auto !important; }
   position: relative; z-index: 2;
   width: 100%; max-width: 1180px;
   margin: 0 auto; padding: 54px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
 }
 
 /* frosted glass panel */
@@ -1430,7 +1431,8 @@ a.gi-value-link:hover { color: var(--gi-gold); }
 
 .gi-cta {
   display: inline-flex; align-items: center; gap: 10px;
-  margin-top: 26px; padding: 12px 24px; border-radius: 999px;
+  flex-shrink: 0;
+  padding: 12px 24px; border-radius: 999px;
   background: var(--gi-teal); color: #fff;
   font-weight: 600; font-size: .9rem; text-decoration: none;
   box-shadow: 0 10px 24px rgba(15,107,110,.32);
@@ -1450,8 +1452,9 @@ a.gi-value-link:hover { color: var(--gi-gold); }
 /* mobile: panel full width; tint becomes top -> bottom darken */
 @media (max-width: 768px) {
   .gi-section { min-height: 0; }
-  .gi-inner { padding: 40px 16px; }
+  .gi-inner { padding: 40px 16px; flex-direction: column; align-items: stretch; gap: 20px; }
   .gi-panel { max-width: none; width: 100%; padding: 30px 22px; border-radius: 18px; }
+  .gi-cta { align-self: center; }
   .gi-tint {
     background: linear-gradient(180deg,
       rgba(8,77,80,.55) 0%, rgba(8,77,80,.82) 55%, rgba(8,77,80,.94) 100%);
