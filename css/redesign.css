@@ -1742,7 +1742,8 @@ a.gi-value-link:hover { color: var(--gi-gold); }
   .js-anim.reveal-left, .js-anim.reveal-right,
   body[data-prefix="../"] .service-body ul li,
   body[data-prefix="../"] .svc-links a,
-  [data-page="contact"] .credentials li {
+  [data-page="contact"] .credentials li,
+  .reels-slider {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
