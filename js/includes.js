@@ -145,7 +145,7 @@
   </div>
   <header class="site-header">
     <div class="container">
-      <a class="logo" href="${p}index.html" aria-label="Dr. Asna Zehra Naqvi home">
+      <a class="logo" href="${p || './'}" aria-label="Dr. Asna Zehra Naqvi home">
         <img src="${p}assets/logo.png?v=4" alt="Dr. Asna Zehra Naqvi — Obstetrics &amp; Gynaecology" class="site-logo"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
         <span class="logo-text" style="display:none;">
@@ -179,7 +179,7 @@
         <div>
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="${p}index.html">Home</a></li>
+            <li><a href="${p || './'}">Home</a></li>
             <li><a href="${p}about.html">About Doctor</a></li>
             <li><a href="${p}services.html">Services</a></li>
             <li><a href="${p}gallery.html">Gallery</a></li>
