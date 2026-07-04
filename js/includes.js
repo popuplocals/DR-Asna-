@@ -25,7 +25,7 @@
   if (!document.querySelector('link[rel="canonical"]')) {
     const can = document.createElement("link");
     can.rel = "canonical";
-    const path = location.pathname.replace(/index\.html$/, "");
+    const path = location.pathname.replace(/index\.html$/, "").replace(/\.html$/, "");
     can.href = "https://asnanaqvi.com" + (path || "/");
     document.head.appendChild(can);
   }
@@ -39,7 +39,7 @@
   /* robots + Open Graph + Twitter — added only if the page lacks them
      (the homepage hardcodes its own; inner pages inherit the full set here) */
   (function () {
-    var url = "https://asnanaqvi.com" + (location.pathname.replace(/index\.html$/, "") || "/");
+    var url = "https://asnanaqvi.com" + (location.pathname.replace(/index\.html$/, "").replace(/\.html$/, "") || "/");
     var dEl = document.querySelector('meta[name="description"]');
     var desc = dEl ? dEl.getAttribute("content") : "";
     var ttl = document.title;
@@ -76,7 +76,7 @@
 
   /* Per-page schema (MedicalWebPage + Breadcrumb + FAQ) built from the page's own content */
   if (!document.getElementById("ld-page")) {
-    const pageUrl = "https://asnanaqvi.com" + location.pathname.replace(/index\.html$/, "");
+    const pageUrl = "https://asnanaqvi.com" + location.pathname.replace(/index\.html$/, "").replace(/\.html$/, "");
     const graph = [{
       "@type": "MedicalWebPage", "url": pageUrl, "name": document.title,
       "about": { "@id": "https://asnanaqvi.com/#physician" },
@@ -107,22 +107,22 @@
 
   const navItems = [
     { href: "index.html", label: "Home", key: "home" },
-    { href: "about.html", label: "About Doctor", key: "about" },
-    { href: "services.html", label: "Services", key: "services" },
-    { href: "gallery.html", label: "Gallery", key: "gallery" },
-    { href: "contact.html", label: "Contact", key: "contact" },
+    { href: "about", label: "About Doctor", key: "about" },
+    { href: "services", label: "Services", key: "services" },
+    { href: "gallery", label: "Gallery", key: "gallery" },
+    { href: "contact", label: "Contact", key: "contact" },
   ];
 
   const services = [
-    ["services/high-risk-pregnancy.html", "High-Risk Pregnancy"],
-    ["services/normal-delivery.html", "Painless Normal Delivery"],
-    ["services/cesarean.html", "Cesarean (C-Section)"],
-    ["services/laparoscopic-surgery.html", "Laparoscopic Surgery"],
-    ["services/infertility-ivf.html", "Infertility / IVF"],
-    ["services/pcos-irregular-periods.html", "PCOS & Irregular Periods"],
-    ["services/ovarian-cyst.html", "Ovarian Cyst Treatment"],
-    ["services/menopausal-health.html", "Menopausal Health"],
-    ["services/adolescent-health.html", "Adolescent Health"],
+    ["services/high-risk-pregnancy", "High-Risk Pregnancy"],
+    ["services/normal-delivery", "Painless Normal Delivery"],
+    ["services/cesarean", "Cesarean (C-Section)"],
+    ["services/laparoscopic-surgery", "Laparoscopic Surgery"],
+    ["services/infertility-ivf", "Infertility / IVF"],
+    ["services/pcos-irregular-periods", "PCOS & Irregular Periods"],
+    ["services/ovarian-cyst", "Ovarian Cyst Treatment"],
+    ["services/menopausal-health", "Menopausal Health"],
+    ["services/adolescent-health", "Adolescent Health"],
   ];
 
   const navLinks = navItems
@@ -132,7 +132,7 @@
         const dd = services
           .map((s) => `<li><a href="${p}${s[0]}">${s[1]}</a></li>`)
           .join("");
-        return `<li class="has-dropdown"><a href="${p}services.html" class="${active}">Services</a><ul class="dropdown">${dd}</ul></li>`;
+        return `<li class="has-dropdown"><a href="${p}services" class="${active}">Services</a><ul class="dropdown">${dd}</ul></li>`;
       }
       const href = it.key === "home" ? (p || "./") : `${p}${it.href}`;
       return `<li><a href="${href}" class="${active}">${it.label}</a></li>`;
@@ -181,10 +181,10 @@
           <h4>Quick Links</h4>
           <ul>
             <li><a href="${p || './'}">Home</a></li>
-            <li><a href="${p}about.html">About Doctor</a></li>
-            <li><a href="${p}services.html">Services</a></li>
-            <li><a href="${p}gallery.html">Gallery</a></li>
-            <li><a href="${p}contact.html">Contact</a></li>
+            <li><a href="${p}about">About Doctor</a></li>
+            <li><a href="${p}services">Services</a></li>
+            <li><a href="${p}gallery">Gallery</a></li>
+            <li><a href="${p}contact">Contact</a></li>
             <li><a href="https://www.apollo247.com/doctors/dr-asna-zehra-naqvi-5a77eea8-2715-47b3-a2c4-f0ff93fd33ca" target="_blank" rel="noopener">Book Appointment</a></li>
           </ul>
         </div>
@@ -207,7 +207,7 @@
         </div>
       </div>
       <p class="footer-disclaimer">The content on this website is for general informational purposes only and does not constitute medical advice. It is not a substitute for an in-person consultation, diagnosis or treatment by a qualified physician. Always seek the advice of Dr. Asna Zehra Naqvi or another qualified healthcare provider with any questions regarding a medical condition.</p>
-      <div class="footer-bottom">&copy; <span id="year">2026</span> Dr. Asna Zehra Naqvi. All rights reserved. &nbsp;·&nbsp; <a href="${p}privacy-policy.html">Privacy Policy</a></div>
+      <div class="footer-bottom">&copy; <span id="year">2026</span> Dr. Asna Zehra Naqvi. All rights reserved. &nbsp;·&nbsp; <a href="${p}privacy-policy">Privacy Policy</a></div>
     </div>
   </footer>`;
 

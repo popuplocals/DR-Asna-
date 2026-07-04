@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://asnanaqvi.com/</loc><priority>1.0</priority></url>
-  <url><loc>https://asnanaqvi.com/about.html</loc><priority>0.8</priority></url>
-  <url><loc>https://asnanaqvi.com/services.html</loc><priority>0.8</priority></url>
-  <url><loc>https://asnanaqvi.com/services/high-risk-pregnancy.html</loc><priority>0.7</priority></url>
-  <url><loc>https://asnanaqvi.com/services/normal-delivery.html</loc><priority>0.7</priority></url>
-  <url><loc>https://asnanaqvi.com/services/cesarean.html</loc><priority>0.7</priority></url>
-  <url><loc>https://asnanaqvi.com/services/laparoscopic-surgery.html</loc><priority>0.7</priority></url>
-  <url><loc>https://asnanaqvi.com/services/infertility-ivf.html</loc><priority>0.7</priority></url>
-  <url><loc>https://asnanaqvi.com/services/pcos-irregular-periods.html</loc><priority>0.7</priority></url>
-  <url><loc>https://asnanaqvi.com/services/ovarian-cyst.html</loc><priority>0.7</priority></url>
-  <url><loc>https://asnanaqvi.com/services/menopausal-health.html</loc><priority>0.7</priority></url>
-  <url><loc>https://asnanaqvi.com/services/adolescent-health.html</loc><priority>0.7</priority></url>
-  <url><loc>https://asnanaqvi.com/gallery.html</loc><priority>0.6</priority></url>
-  <url><loc>https://asnanaqvi.com/contact.html</loc><priority>0.6</priority></url>
-  <url><loc>https://asnanaqvi.com/privacy-policy.html</loc><priority>0.3</priority></url>
+  <url><loc>https://asnanaqvi.com/about</loc><priority>0.8</priority></url>
+  <url><loc>https://asnanaqvi.com/services</loc><priority>0.8</priority></url>
+  <url><loc>https://asnanaqvi.com/services/high-risk-pregnancy</loc><priority>0.7</priority></url>
+  <url><loc>https://asnanaqvi.com/services/normal-delivery</loc><priority>0.7</priority></url>
+  <url><loc>https://asnanaqvi.com/services/cesarean</loc><priority>0.7</priority></url>
+  <url><loc>https://asnanaqvi.com/services/laparoscopic-surgery</loc><priority>0.7</priority></url>
+  <url><loc>https://asnanaqvi.com/services/infertility-ivf</loc><priority>0.7</priority></url>
+  <url><loc>https://asnanaqvi.com/services/pcos-irregular-periods</loc><priority>0.7</priority></url>
+  <url><loc>https://asnanaqvi.com/services/ovarian-cyst</loc><priority>0.7</priority></url>
+  <url><loc>https://asnanaqvi.com/services/menopausal-health</loc><priority>0.7</priority></url>
+  <url><loc>https://asnanaqvi.com/services/adolescent-health</loc><priority>0.7</priority></url>
+  <url><loc>https://asnanaqvi.com/gallery</loc><priority>0.6</priority></url>
+  <url><loc>https://asnanaqvi.com/contact</loc><priority>0.6</priority></url>
+  <url><loc>https://asnanaqvi.com/privacy-policy</loc><priority>0.3</priority></url>
 </urlset>
