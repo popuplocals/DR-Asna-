@@ -134,7 +134,8 @@
           .join("");
         return `<li class="has-dropdown"><a href="${p}services.html" class="${active}">Services</a><ul class="dropdown">${dd}</ul></li>`;
       }
-      return `<li><a href="${p}${it.href}" class="${active}">${it.label}</a></li>`;
+      const href = it.key === "home" ? (p || "./") : `${p}${it.href}`;
+      return `<li><a href="${href}" class="${active}">${it.label}</a></li>`;
     })
     .join("");
 
