@@ -4,6 +4,20 @@
    root pages and "../" for pages inside /services/.
    ========================================================================== */
 (function () {
+  /* Permanent .html cleanup: if this page was reached via an old link that
+     still has .html in it (stale Google result, old bookmark, shared link,
+     etc.), silently rewrite the address bar to the clean URL. No reload,
+     no flicker -- history.replaceState just swaps what's displayed. Runs
+     on every page load, so it self-heals regardless of how someone arrives. */
+  (function cleanUrl() {
+    var path = location.pathname;
+    var clean = path.replace(/index\.html$/, "").replace(/\.html$/, "");
+    if (!clean) clean = "/";
+    if (clean !== path && window.history && history.replaceState) {
+      history.replaceState(null, "", clean + location.search + location.hash);
+    }
+  })();
+
   const body = document.body;
   const page = body.getAttribute("data-page") || "";
   const p = body.getAttribute("data-prefix") || "";
