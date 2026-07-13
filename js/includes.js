@@ -132,7 +132,7 @@
     ["services/normal-delivery", "Painless Normal Delivery"],
     ["services/cesarean", "Cesarean (C-Section)"],
     ["services/laparoscopic-surgery", "Laparoscopic Surgery"],
-    ["services/infertility-ivf", "Infertility / IVF"],
+    ["services/infertility", "Infertility Treatment"],
     ["services/pcos-irregular-periods", "PCOS & Irregular Periods"],
     ["services/ovarian-cyst", "Ovarian Cyst Treatment"],
     ["services/menopausal-health", "Menopausal Health"],
