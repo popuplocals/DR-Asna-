@@ -214,7 +214,7 @@
           <div class="foot-map">
             <iframe
               title="Dr. Asna Zehra Naqvi location map"
-              src="https://www.google.com/maps?q=26.798121,80.901521&z=16&output=embed"
+              src="https://www.google.com/maps?q=Dr.+Asna+Zehra+Naqvi,+Apollomedics+Super+Speciality+Hospitals,+Lucknow&z=16&output=embed"
               width="100%" height="170" style="border:0;display:block;border-radius:12px;" loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
