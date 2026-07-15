@@ -170,7 +170,7 @@
       </a>
       <nav class="main-nav" aria-label="Primary"><ul><span class="nav-glider" aria-hidden="true"></span>${navLinks}</ul></nav>
       <div class="header-cta">
-        <a href="https://www.apollo247.com/doctors/dr-asna-zehra-naqvi-5a77eea8-2715-47b3-a2c4-f0ff93fd33ca" target="_blank" rel="noopener" class="btn btn--primary">Book Appointment</a>
+        <a href="tel:+919988443272" class="btn btn--primary">Book Appointment</a>
         <button class="hamburger" aria-label="Open menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
       </div>
     </div>
