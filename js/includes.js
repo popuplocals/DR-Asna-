@@ -199,7 +199,7 @@
             <li><a href="${p}services">Services</a></li>
             <li><a href="${p}gallery">Gallery</a></li>
             <li><a href="${p}contact">Contact</a></li>
-            <li><a href="https://www.apollo247.com/doctors/dr-asna-zehra-naqvi-5a77eea8-2715-47b3-a2c4-f0ff93fd33ca" target="_blank" rel="noopener">Book Appointment</a></li>
+            <li><a href="tel:+919988443272">Book Appointment</a></li>
           </ul>
         </div>
         <div>
