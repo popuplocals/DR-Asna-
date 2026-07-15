@@ -33,6 +33,48 @@ document.addEventListener("DOMContentLoaded", function () {
     document.head.appendChild(s);
   })();
 
+  /* ---------- Header: hide on scroll down, reveal on scroll up ----------
+     Fixed header (see #site-header-mount in styles.css) stays put while
+     idle/scrolling up; slides away only while actively scrolling down past
+     a small threshold, so it never eats screen space while reading, but
+     is always one upward flick away. */
+  (function () {
+    const mount = document.getElementById("site-header-mount");
+    if (!mount) return;
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return; // header stays visible & static; no listener needed
+
+    const HIDE_AFTER = 120;   // px scrolled before hide is allowed to kick in
+    const TOLERANCE = 6;      // px of jitter to ignore (trackpads, mobile rubber-band)
+    const MIN_GAP = 50;       // ms between processed scroll updates (plain time-throttle)
+    let lastY = window.scrollY || 0;
+    let lastRun = 0;
+
+    function onScroll() {
+      const y = window.scrollY || 0;
+      const delta = y - lastY;
+      if (Math.abs(delta) > TOLERANCE) {
+        if (y <= HIDE_AFTER || delta < 0) {
+          mount.classList.remove("hdr-hidden");     // near top, or scrolling up
+        } else if (delta > 0) {
+          mount.classList.add("hdr-hidden");         // scrolling down past threshold
+        }
+        lastY = y;
+      }
+    }
+    window.addEventListener("scroll", function () {
+      const now = Date.now();
+      if (now - lastRun < MIN_GAP) return;
+      lastRun = now;
+      onScroll();
+    }, { passive: true });
+
+    // If a dropdown/menu is open, keep the header visible so it doesn't vanish mid-interaction
+    document.addEventListener("focusin", function (e) {
+      if (mount.contains(e.target)) mount.classList.remove("hdr-hidden");
+    });
+  })();
+
   /* ---------- Mobile nav / hamburger ---------- */
   const hamburger = document.querySelector(".hamburger");
   const nav = document.querySelector(".main-nav");

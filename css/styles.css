@@ -120,8 +120,29 @@ p { margin: 0 0 1rem; }
 .emergency-strip a { font-weight: 600; color: #fff; }
 .emergency-strip i { color: var(--gold); margin-right: 6px; }
 
+/* Header + emergency strip are injected together into this mount point.
+   The whole group is fixed (not sticky) so it stays put for the ENTIRE
+   page — sticky would only work while its (short) parent box is in view,
+   which is why the header used to scroll away and never come back. */
+#site-header-mount {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 120;
+  transition: transform .4s var(--ease-out);
+}
+#site-header-mount.hdr-hidden { transform: translateY(-100%); }
+
+/* Reserve the space the fixed header used to occupy in normal flow, so
+   page content doesn't start underneath it. Kept in sync with the header's
+   real rendered height via --fixed-hdr-h (set in JS); this value is just
+   a same-breakpoint fallback for the instant before that JS runs. */
+body { padding-top: var(--fixed-hdr-h, 134px); }
+@media (max-width: 820px) { body { padding-top: var(--fixed-hdr-h, 108px); } }
+@media (prefers-reduced-motion: reduce) {
+  #site-header-mount { transition: none; }
+  #site-header-mount.hdr-hidden { transform: none; }
+}
+
 .site-header {
-  position: sticky; top: 6px; z-index: 120;   /* above the mobile nav backdrop (105) */
+  position: relative;
   width: calc(100% - 36px); max-width: 1180px;
   margin: 5px auto 14px;
   background: #fff;

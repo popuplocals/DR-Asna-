@@ -236,6 +236,18 @@
   if (headerMount) headerMount.innerHTML = header;
   if (footerMount) footerMount.innerHTML = footer + floating;
 
+  /* ---------- Keep body's top padding matched to the fixed header's real height ---------- */
+  if (headerMount) {
+    const syncHeaderHeight = function () {
+      document.documentElement.style.setProperty("--fixed-hdr-h", headerMount.offsetHeight + "px");
+    };
+    syncHeaderHeight();
+    window.addEventListener("resize", syncHeaderHeight, { passive: true });
+    window.addEventListener("load", syncHeaderHeight);
+    const logoImg = headerMount.querySelector(".site-logo");
+    if (logoImg && !logoImg.complete) logoImg.addEventListener("load", syncHeaderHeight, { once: true });
+  }
+
   /* ---------- Visible "medically reviewed by" trust line on service detail pages ---------- */
   (function addReviewedByLine() {
     const svcLinks = document.querySelector(".service-body .svc-links");
