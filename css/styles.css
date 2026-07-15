@@ -109,10 +109,6 @@ p { margin: 0 0 1rem; }
 .btn--outline:hover { background: var(--primary); color: #fff; }
 .btn--ghost { background: #fff; color: var(--accent-deep); box-shadow: var(--shadow-soft); }
 .btn--ghost:hover { background: var(--accent-deep); color: #fff; }
-/* Long call-to-book labels must shrink, not overflow, on small phones */
-@media (max-width: 420px) {
-  .btn { white-space: normal; text-align: center; justify-content: center; font-size: .92rem; padding: 12px 20px; }
-}
 
 /* ==========================================================================
    Header / Navigation

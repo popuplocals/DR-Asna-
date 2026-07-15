@@ -170,7 +170,7 @@
       </a>
       <nav class="main-nav" aria-label="Primary"><ul><span class="nav-glider" aria-hidden="true"></span>${navLinks}</ul></nav>
       <div class="header-cta">
-        <a href="tel:+919988443272" class="btn btn--primary"><i class="fa-solid fa-phone"></i> 99884 43272</a>
+        <a href="tel:+919988443272" class="btn btn--primary"><i class="fa-solid fa-phone"></i> Book Appointment</a>
         <button class="hamburger" aria-label="Open menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
       </div>
     </div>
