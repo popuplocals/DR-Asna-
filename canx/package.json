@@ -1,0 +1,20 @@
+{
+  "name": "canx-global-homepage",
+  "version": "1.0.0",
+  "description": "Can X Global homepage rebuilt as a fast Node.js (Express + EJS) application. Inner pages continue to be served by the existing WordPress site.",
+  "main": "server.js",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node test/smoke.test.js"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  }
+}

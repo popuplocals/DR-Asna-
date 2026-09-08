@@ -1,0 +1,262 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <p class="eyebrow eyebrow--light"><%= site.hero.eyebrow %></p>
+        <h1><%= site.hero.title %> <span class="hero__highlight"><%= site.hero.highlight %></span></h1>
+        <p class="hero__text"><%= site.hero.text %></p>
+        <div class="hero__actions">
+          <a class="btn btn--primary btn--lg" href="<%= wp(site.hero.primary.href) %>"><%- icon('briefcase', 20) %> <%= site.hero.primary.label %></a>
+          <a class="btn btn--outline-light btn--lg" href="<%= wp(site.hero.secondary.href) %>"><%- icon('globe', 20) %> <%= site.hero.secondary.label %></a>
+        </div>
+        <ul class="hero__badges">
+          <% site.hero.badges.forEach(b => { %>
+            <li><%- icon('check', 16) %> <%= b %></li>
+          <% }) %>
+        </ul>
+      </div>
+      <div class="hero__media">
+        <img src="/img/hero.svg?v=<%= assetVersion %>" alt="" width="560" height="480" fetchpriority="high" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="stats" aria-label="Can X Global at a glance">
+    <div class="container stats__grid">
+      <% site.stats.forEach(s => { %>
+        <div class="stat">
+          <span class="stat__value"><%= s.value %></span>
+          <span class="stat__label"><%= s.label %></span>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- ============ PATHS ============ -->
+  <section class="section paths" id="paths">
+    <div class="container">
+      <div class="section__head">
+        <h2><%= site.paths.title %></h2>
+        <p><%= site.paths.subtitle %></p>
+      </div>
+      <div class="grid grid--3">
+        <% site.paths.items.forEach(p => { %>
+          <article class="card card--path">
+            <div class="card__icon"><%- icon(p.icon, 28) %></div>
+            <h3><%= p.title %></h3>
+            <p><%= p.text %></p>
+            <a class="link-arrow" href="<%= wp(p.link.href) %>"><%= p.link.label %> <%- icon('arrow-right', 18) %></a>
+          </article>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RECRUITMENT ============ -->
+  <section class="section section--alt recruitment" id="recruitment">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow"><%= site.recruitment.eyebrow %></p>
+        <h2><%= site.recruitment.title %></h2>
+        <p><%= site.recruitment.subtitle %></p>
+      </div>
+      <div class="grid grid--4">
+        <% site.recruitment.services.forEach(s => { %>
+          <a class="card card--service" href="<%= wp(s.href) %>">
+            <div class="card__icon card__icon--accent"><%- icon(s.icon, 26) %></div>
+            <h3><%= s.title %></h3>
+            <p><%= s.text %></p>
+            <span class="link-arrow">Learn more <%- icon('arrow-right', 18) %></span>
+          </a>
+        <% }) %>
+      </div>
+      <div class="section__foot">
+        <a class="btn btn--secondary" href="<%= wp(site.recruitment.link.href) %>"><%= site.recruitment.link.label %></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IMMIGRATION ============ -->
+  <section class="section immigration" id="immigration">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow"><%= site.immigration.eyebrow %></p>
+        <h2><%= site.immigration.title %></h2>
+        <p><%= site.immigration.subtitle %></p>
+      </div>
+      <div class="grid grid--3">
+        <% site.immigration.services.forEach(s => { %>
+          <a class="card card--service" href="<%= wp(s.href) %>">
+            <div class="card__icon"><%- icon(s.icon, 26) %></div>
+            <h3><%= s.title %></h3>
+            <p><%= s.text %></p>
+            <span class="link-arrow">Learn more <%- icon('arrow-right', 18) %></span>
+          </a>
+        <% }) %>
+      </div>
+      <div class="section__foot">
+        <a class="btn btn--secondary" href="<%= wp(site.immigration.link.href) %>"><%= site.immigration.link.label %></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY CAN X ============ -->
+  <section class="section section--dark why" id="why">
+    <div class="container why__inner">
+      <div class="why__intro">
+        <p class="eyebrow eyebrow--light"><%= site.why.eyebrow %></p>
+        <h2><%= site.why.title %></h2>
+        <p><%= site.why.text %></p>
+        <a class="btn btn--primary" href="<%= wp(site.why.link.href) %>"><%= site.why.link.label %></a>
+      </div>
+      <ul class="why__points">
+        <% site.why.points.forEach(p => { %>
+          <li>
+            <div class="why__icon"><%- icon(p.icon, 24) %></div>
+            <div>
+              <h3><%= p.title %></h3>
+              <p><%= p.text %></p>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ OUR STORY ============ -->
+  <section class="section story" id="story">
+    <div class="container story__inner">
+      <div class="story__media">
+        <img src="/img/story.svg?v=<%= assetVersion %>" alt="" width="520" height="420" loading="lazy" decoding="async">
+      </div>
+      <div class="story__content">
+        <p class="eyebrow"><%= site.story.eyebrow %></p>
+        <h2><%= site.story.title %></h2>
+        <p><%= site.story.text %></p>
+        <a class="founder" href="<%= wp(site.story.founder.href) %>">
+          <span class="founder__avatar" aria-hidden="true"><%= site.story.founder.name.split(' ').map(n => n[0]).join('') %></span>
+          <span>
+            <strong><%= site.story.founder.name %></strong><br>
+            <small><%= site.story.founder.role %></small>
+          </span>
+        </a>
+        <div>
+          <a class="link-arrow" href="<%= wp(site.story.link.href) %>"><%= site.story.link.label %> <%- icon('arrow-right', 18) %></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section class="section section--alt process" id="process">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow"><%= site.process.eyebrow %></p>
+        <h2><%= site.process.title %></h2>
+      </div>
+      <ol class="steps">
+        <% site.process.steps.forEach((s, i) => { %>
+          <li class="step">
+            <span class="step__num"><%= i + 1 %></span>
+            <h3><%= s.title %></h3>
+            <p><%= s.text %></p>
+          </li>
+        <% }) %>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section testimonials" id="testimonials">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow"><%= site.testimonials.eyebrow %></p>
+        <h2><%= site.testimonials.title %></h2>
+      </div>
+      <div class="grid grid--3">
+        <% site.testimonials.items.forEach(t => { %>
+          <figure class="testimonial">
+            <div class="testimonial__quote-icon"><%- icon('quote', 28) %></div>
+            <blockquote><p><%= t.quote %></p></blockquote>
+            <figcaption>
+              <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+              <strong><%= t.name %></strong>
+              <small><%= t.meta %></small>
+            </figcaption>
+          </figure>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BLOG ============ -->
+  <section class="section section--alt blog" id="blog">
+    <div class="container">
+      <div class="section__head section__head--row">
+        <div>
+          <p class="eyebrow"><%= site.blog.eyebrow %></p>
+          <h2><%= site.blog.title %></h2>
+        </div>
+        <a class="btn btn--secondary" href="<%= wp(site.blog.link.href) %>"><%= site.blog.link.label %></a>
+      </div>
+      <div class="grid grid--4">
+        <% site.blog.posts.forEach(p => { %>
+          <a class="post" href="<%= wp(p.href) %>">
+            <span class="post__tag"><%= p.tag %></span>
+            <h3><%= p.title %></h3>
+            <p><%= p.excerpt %></p>
+            <span class="link-arrow">Read article <%- icon('arrow-right', 18) %></span>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GET STARTED ============ -->
+  <section class="section get-started" id="get-started">
+    <div class="container get-started__inner">
+      <div class="get-started__content">
+        <p class="eyebrow eyebrow--light"><%= site.getStarted.eyebrow %></p>
+        <h2><%= site.getStarted.title %></h2>
+        <p><%= site.getStarted.text %></p>
+        <ul class="get-started__contact">
+          <li><%- icon('phone', 20) %> <a href="<%= site.contact.phoneHref %>"><%= site.contact.phone %></a></li>
+          <li><%- icon('mail', 20) %> <a href="mailto:<%= site.contact.email %>"><%= site.contact.email %></a></li>
+          <li><%- icon('map-pin', 20) %> <span><%= site.contact.address %>, <%= site.contact.city %></span></li>
+        </ul>
+        <a class="btn btn--outline-light" href="<%= wp(site.getStarted.scheduleLink.href) %>"><%= site.getStarted.scheduleLink.label %></a>
+      </div>
+
+      <form class="form" id="getStartedForm" method="post" action="/api/get-started" novalidate>
+        <div class="form__row">
+          <label>Full name<input type="text" name="name" required autocomplete="name" placeholder="Your name"></label>
+          <label>Email<input type="email" name="email" required autocomplete="email" placeholder="you@example.com"></label>
+        </div>
+        <div class="form__row">
+          <label>Phone<input type="tel" name="phone" autocomplete="tel" placeholder="+1 ..."></label>
+          <label>I'm interested in
+            <select name="interest">
+              <% site.getStarted.interests.forEach(i => { %>
+                <option value="<%= i %>"><%= i %></option>
+              <% }) %>
+            </select>
+          </label>
+        </div>
+        <label>Message<textarea name="message" rows="4" placeholder="Tell us briefly about your goal"></textarea></label>
+        <label class="hp" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        <button class="btn btn--primary btn--block" type="submit">Get a Consultation</button>
+        <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+        <p class="form__note">Consultations start at just $49. By submitting you agree to be contacted by Can X Global.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<%- include('partials/footer') %>
