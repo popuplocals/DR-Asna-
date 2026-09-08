@@ -4,21 +4,19 @@
 
 const assert = require('assert');
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 const app = require('../server');
 
-function request(server, method, path, body) {
+function request(server, method, reqPath) {
   return new Promise((resolve, reject) => {
     const { port } = server.address();
-    const req = http.request(
-      { host: '127.0.0.1', port, method, path, headers: body ? { 'Content-Type': 'application/json' } : {} },
-      (res) => {
-        let data = '';
-        res.on('data', (c) => (data += c));
-        res.on('end', () => resolve({ status: res.statusCode, headers: res.headers, body: data }));
-      }
-    );
+    const req = http.request({ host: '127.0.0.1', port, method, path: reqPath }, (res) => {
+      let data = '';
+      res.on('data', (c) => (data += c));
+      res.on('end', () => resolve({ status: res.statusCode, headers: res.headers, body: data }));
+    });
     req.on('error', reject);
-    if (body) req.write(JSON.stringify(body));
     req.end();
   });
 }
@@ -28,23 +26,31 @@ function request(server, method, path, body) {
   try {
     const home = await request(server, 'GET', '/');
     assert.strictEqual(home.status, 200, 'homepage should return 200');
-    assert.ok(home.body.includes('We Help Companies Thrive'), 'hero headline present');
-    assert.ok(home.body.includes('help@canxglobal.com'), 'contact email present');
-    assert.ok(home.body.includes('Hire TFW'), 'recruitment services present');
-    assert.ok(home.body.includes('Express Entry'), 'immigration mega menu present');
-    assert.ok(home.body.includes('application/ld+json'), 'structured data present');
+    assert.ok(home.body.includes('Top Rated Recruitment &amp; Immigration Experts in Canada') || home.body.includes('Top Rated Recruitment & Immigration Experts in Canada'), 'hero headline present');
+    assert.ok(home.body.includes('Connecting Talent. Simplifying Immigration.'), 'hero subline present');
+    assert.ok(home.body.includes('Trusted by Clients from 30+ Countries'), 'testimonials heading present');
+    assert.ok(!home.body.includes('googletagmanager'), 'tag manager stripped');
+    assert.ok(!home.body.includes('data-lazy-src'), 'rocket lazyload stripped');
 
-    const css = await request(server, 'GET', '/css/style.css');
-    assert.strictEqual(css.status, 200, 'stylesheet served');
+    // Every local asset the homepage references must exist on disk.
+    const refs = new Set();
+    for (const m of home.body.matchAll(/(?:href|src|poster)=["'](\/(?:wp-content|external)\/[^"'?#]+)/g)) refs.add(m[1]);
+    for (const m of home.body.matchAll(/srcset=["']([^"']+)["']/g)) {
+      for (const part of m[1].split(',')) {
+        const u = part.trim().split(/\s+/)[0];
+        if (u.startsWith('/wp-content/') || u.startsWith('/external/')) refs.add(u.split('?')[0]);
+      }
+    }
+    for (const m of home.body.matchAll(/url\((['"]?)(\/(?:wp-content|external)\/[^)'"?#]+)/g)) refs.add(m[2]);
+    const missing = [...refs].filter((r) => !fs.existsSync(path.join(__dirname, '..', 'public', decodeURIComponent(r))));
+    assert.deepStrictEqual(missing, [], 'missing assets: ' + missing.slice(0, 10).join(', '));
+    console.log(`homepage references ${refs.size} local assets, all present`);
+
+    const css = await request(server, 'GET', '/wp-content/themes/astra/assets/css/minified/main.min__ver_4_13_2.css');
+    assert.strictEqual(css.status, 200, 'theme stylesheet served');
 
     const health = await request(server, 'GET', '/healthz');
     assert.strictEqual(health.status, 200);
-
-    const bad = await request(server, 'POST', '/api/get-started', { name: '', email: 'nope' });
-    assert.strictEqual(bad.status, 400, 'invalid lead rejected');
-
-    const good = await request(server, 'POST', '/api/get-started', { name: 'Test', email: 'test@example.com' });
-    assert.strictEqual(good.status, 200, 'valid lead accepted');
 
     const fallback = await request(server, 'GET', '/work-permit/');
     assert.strictEqual(fallback.status, 302, 'unknown paths forward to WordPress');

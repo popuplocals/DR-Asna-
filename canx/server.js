@@ -3,25 +3,26 @@
 /**
  * Can X Global — homepage server
  *
- * A small, fast Express app that renders the homepage with EJS.
- * All inner pages remain on the existing WordPress site; links on the
- * homepage point to WP_BASE_URL (default https://canxglobal.com).
+ * Serves the canxglobal.com homepage (exact markup, styles, fonts and images
+ * from the WordPress site) as a fast Node.js app. Inner pages stay on
+ * WordPress: links point there and unknown paths are forwarded.
+ *
+ * The homepage's own JavaScript (chat widget, Elementor widgets) calls the
+ * WordPress AJAX and REST endpoints on the same origin, so those two paths
+ * are proxied to WP_BASE_URL.
  */
 
 const path = require('path');
+const https = require('https');
+const http = require('http');
+const { URL } = require('url');
 const express = require('express');
 const compression = require('compression');
-
-const site = require('./data/site');
-const { icon } = require('./lib/icons');
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 const IS_PROD = process.env.NODE_ENV === 'production';
 const WP_BASE_URL = (process.env.WP_BASE_URL || 'https://canxglobal.com').replace(/\/+$/, '');
-
-// Cache-busting token for static assets: bump on every deploy.
-const ASSET_VERSION = process.env.ASSET_VERSION || String(Date.now()).slice(0, 10);
 
 app.disable('x-powered-by');
 app.set('trust proxy', true);
@@ -29,92 +30,84 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view cache', IS_PROD);
 
-// Gzip / brotli-compatible compression for HTML, CSS, JS and SVG.
 app.use(compression({ threshold: 1024 }));
 
-// Parse form submissions (Get Started form).
-app.use(express.urlencoded({ extended: false, limit: '32kb' }));
-app.use(express.json({ limit: '32kb' }));
+// Lightweight security headers (no extra dependency).
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
 
-// Static assets with long-lived caching (cache-busted via ?v=ASSET_VERSION).
+// Static assets: file names carry version hashes (…__ver_123.css, …__fit_625.webp),
+// so they can be cached for a year.
 app.use(
   express.static(path.join(__dirname, 'public'), {
     maxAge: IS_PROD ? '365d' : 0,
     immutable: IS_PROD,
     etag: true,
     index: false,
+    dotfiles: 'ignore',
   })
 );
 
-// Lightweight security headers (no extra dependency).
-app.use((req, res, next) => {
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
-  next();
-});
-
-/** Build a link to a page on the WordPress site. */
-function wp(pathname) {
-  if (!pathname) return WP_BASE_URL + '/';
-  if (/^https?:\/\//i.test(pathname) || pathname.startsWith('#') || pathname.startsWith('mailto:') || pathname.startsWith('tel:')) {
-    return pathname;
-  }
-  return WP_BASE_URL + '/' + pathname.replace(/^\/+/, '');
-}
-
-const baseLocals = {
-  site,
-  wp,
-  icon,
-  assetVersion: ASSET_VERSION,
-  wpBaseUrl: WP_BASE_URL,
-  year: new Date().getFullYear(),
-};
+/* ------------------------------------------------------------------ */
+/* Homepage                                                            */
+/* ------------------------------------------------------------------ */
 
 app.get('/', (req, res) => {
   res.setHeader('Cache-Control', IS_PROD ? 'public, max-age=300, stale-while-revalidate=600' : 'no-cache');
-  res.render('index', { ...baseLocals, page: { title: site.meta.title, description: site.meta.description } });
+  res.render('index', { wpBaseUrl: WP_BASE_URL });
 });
 
-// Convenience alias used by the WordPress site.
-app.get(['/home', '/index.html'], (req, res) => res.redirect(301, '/'));
+app.get(['/home', '/index.html', '/index.php'], (req, res) => res.redirect(301, '/'));
 
-// Get Started form handler. Replace the console.log with an email / CRM hook.
-app.post('/api/get-started', (req, res) => {
-  const { name = '', email = '', phone = '', interest = '', message = '', website = '' } = req.body || {};
-
-  // Honeypot: real users never fill this hidden field.
-  if (website) return res.status(200).json({ ok: true });
-
-  if (!name.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-    return res.status(400).json({ ok: false, error: 'Please provide your name and a valid email address.' });
-  }
-
-  const lead = {
-    name: name.trim().slice(0, 120),
-    email: email.trim().slice(0, 200),
-    phone: phone.trim().slice(0, 40),
-    interest: interest.trim().slice(0, 80),
-    message: message.trim().slice(0, 2000),
-    receivedAt: new Date().toISOString(),
-    ip: req.ip,
-  };
-  console.log('[get-started] new lead', JSON.stringify(lead));
-
-  return res.json({ ok: true, message: 'Thank you! Our team will reach out within one business day.' });
-});
-
-// Health check for load balancers / uptime monitors.
 app.get('/healthz', (req, res) => res.json({ ok: true, uptime: process.uptime() }));
 
-// robots.txt and a homepage-only sitemap.
 app.get('/robots.txt', (req, res) => {
-  res.type('text/plain').send('User-agent: *\nAllow: /\nSitemap: ' + WP_BASE_URL + '/sitemap.xml\n');
+  res.type('text/plain').send('User-agent: *\nAllow: /\nDisallow: /wp-admin/\nSitemap: ' + WP_BASE_URL + '/sitemap_index.xml\n');
 });
 
-// Anything else lives on WordPress: forward there so old links keep working.
+/* ------------------------------------------------------------------ */
+/* Proxy the WordPress endpoints the homepage scripts call             */
+/* ------------------------------------------------------------------ */
+
+function proxyToWordPress(req, res) {
+  const target = new URL(req.originalUrl, WP_BASE_URL);
+  const client = target.protocol === 'http:' ? http : https;
+
+  const headers = { ...req.headers, host: target.host };
+  delete headers['accept-encoding']; // let Node handle plain bodies
+  delete headers.cookie; // never forward visitor cookies to WordPress
+
+  const upstream = client.request(
+    target,
+    { method: req.method, headers, timeout: 15000 },
+    (up) => {
+      const passthrough = {};
+      for (const [k, v] of Object.entries(up.headers)) {
+        if (!['set-cookie', 'transfer-encoding', 'connection', 'content-encoding'].includes(k)) passthrough[k] = v;
+      }
+      res.writeHead(up.statusCode || 502, passthrough);
+      up.pipe(res);
+    }
+  );
+  upstream.on('timeout', () => upstream.destroy(new Error('upstream timeout')));
+  upstream.on('error', (err) => {
+    console.error('[proxy]', req.method, req.originalUrl, err.message);
+    if (!res.headersSent) res.status(502).json({ ok: false, error: 'WordPress is unreachable' });
+  });
+  req.pipe(upstream);
+}
+
+app.all('/wp-admin/admin-ajax.php', proxyToWordPress);
+app.all(/^\/wp-json(\/.*)?$/, proxyToWordPress);
+app.all(/^\/\?jkit-ajax-request=.*/, proxyToWordPress);
+
+/* ------------------------------------------------------------------ */
+/* Everything else lives on WordPress                                  */
+/* ------------------------------------------------------------------ */
+
 app.use((req, res) => {
   res.redirect(302, WP_BASE_URL + req.originalUrl);
 });
@@ -122,7 +115,7 @@ app.use((req, res) => {
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Can X Global homepage running at http://localhost:${PORT} (${IS_PROD ? 'production' : 'development'})`);
-    console.log(`Inner-page links point to ${WP_BASE_URL}`);
+    console.log(`WordPress base: ${WP_BASE_URL}`);
   });
 }
 
