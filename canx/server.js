@@ -112,8 +112,15 @@ app.all(/^\/\?jkit-ajax-request=.*/, proxyToWordPress);
 // fetched once from WordPress, stored in ASSET_CACHE_DIR and served from disk
 // from then on, so the page stays same-origin and fast.
 const fs = require('fs');
-const ASSET_CACHE_DIR = process.env.ASSET_CACHE_DIR || path.join(__dirname, '.asset-cache');
-fs.mkdirSync(ASSET_CACHE_DIR, { recursive: true });
+const os = require('os');
+let ASSET_CACHE_DIR = process.env.ASSET_CACHE_DIR || path.join(__dirname, '.asset-cache');
+try {
+  fs.mkdirSync(ASSET_CACHE_DIR, { recursive: true });
+} catch (err) {
+  // Read-only filesystem (serverless hosts such as Vercel): fall back to the temp dir.
+  ASSET_CACHE_DIR = path.join(os.tmpdir(), 'canx-asset-cache');
+  fs.mkdirSync(ASSET_CACHE_DIR, { recursive: true });
+}
 
 app.use(express.static(ASSET_CACHE_DIR, { maxAge: IS_PROD ? '365d' : 0, immutable: IS_PROD, index: false }));
 
