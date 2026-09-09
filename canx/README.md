@@ -1,8 +1,10 @@
 # Can X Global — Node.js Homepage
 
-A fast, dependency-light rebuild of the [canxglobal.com](https://canxglobal.com/) homepage in
-Node.js (Express + EJS). The rest of the site stays on WordPress: every inner-page link on this
-homepage points to the WordPress site, and any unknown path is forwarded there.
+The [canxglobal.com](https://canxglobal.com/) homepage served by a fast Node.js (Express + EJS)
+app. The page is the **exact** homepage of the WordPress site — same markup, same Elementor
+layout, same stylesheets, fonts and images — with the WordPress-only overhead stripped out.
+The rest of the site stays on WordPress: every inner-page link points there, and any path the
+Node app does not know is forwarded to WordPress.
 
 ## Quick start
 
@@ -18,7 +20,8 @@ Development with auto-reload (Node 18+):
 npm run dev
 ```
 
-Run the smoke tests:
+Run the smoke tests (boots the app, checks the key routes and that every asset the page
+references exists on disk):
 
 ```bash
 npm test
@@ -28,65 +31,67 @@ npm test
 
 Copy `.env.example` and set the variables in your environment (or a process manager):
 
-| Variable        | Default                    | Purpose                                                  |
-| --------------- | -------------------------- | -------------------------------------------------------- |
-| `PORT`          | `3000`                     | Port to listen on                                        |
-| `WP_BASE_URL`   | `https://canxglobal.com`   | Base URL of the WordPress site for inner-page links      |
-| `NODE_ENV`      | (unset)                    | `production` enables template caching and 1-year asset caching |
-| `ASSET_VERSION` | current timestamp          | Cache-busting token appended to CSS/JS/image URLs        |
+| Variable          | Default                    | Purpose                                                                 |
+| ----------------- | -------------------------- | ----------------------------------------------------------------------- |
+| `PORT`            | `3000`                     | Port to listen on                                                       |
+| `WP_BASE_URL`     | `https://canxglobal.com`   | The WordPress site: inner pages, AJAX/REST endpoints, on-demand assets  |
+| `NODE_ENV`        | (unset)                    | `production` enables template caching and 1-year asset caching          |
+| `ASSET_CACHE_DIR` | `canx/.asset-cache`        | Where assets fetched on demand from WordPress are stored                |
 
 ## Project layout
 
 ```
 canx/
-├── server.js            Express app: routes, compression, caching, form endpoint
-├── data/site.js         ALL homepage content (nav, hero, services, testimonials, footer…)
-├── lib/icons.js         Inline SVG icon set
-├── views/
-│   ├── index.ejs        Homepage sections in order
-│   └── partials/        head, header (top bar + sticky nav + mega menu), footer
+├── server.js               Express app: homepage, static assets, WordPress proxies
+├── views/index.ejs         The homepage — generated from the WordPress export (do not hand-edit)
+├── tools/clean-mirror.js   Turns the WordPress homepage export into views/index.ejs
 ├── public/
-│   ├── css/style.css    Single hand-written stylesheet, fully responsive
-│   ├── js/main.js       Mobile nav, sticky header, reveal-on-scroll, AJAX form
-│   └── img/             Logo, favicon and illustrations (all SVG)
-└── test/smoke.test.js   Boots the server and checks the key routes
+│   ├── wp-content/         Theme + plugin CSS/JS, uploads (exactly as on WordPress)
+│   └── external/           Self-hosted copies of CDN assets (Google Fonts, Jetpack images…)
+└── test/smoke.test.js      Boots the server and checks the key routes and assets
 ```
 
-## Homepage sections (top to bottom)
+## How the page is built
 
-1. Top bar — phone, email, office hours, social links
-2. Sticky header — logo, primary nav (Employers ▾, Job Seekers, Immigration mega menu, Why Can X, Our Story, Team, Blog, Contact Us), **Get Started** button
-3. Hero — "We Help Companies Thrive and People Succeed — Real People, Real Solutions."
-4. Stats strip — 10+ years, 30+ countries, 10,000+ clients, since 2016
-5. Two ways we can help — Employers / Job Seekers / Immigration
-6. Recruitment — Hire Local, Hire Global, Hire Remote, Hire TFW (LMIA)
-7. Immigration — Work Permit, PR, Study, Visit, Family Sponsorship, Citizenship
-8. Why Choose Can X — licensed RCICs, human-first, people + technology, integrity
-9. Our Story — since 2016, founder Anuj Sengar (RCIC R515178)
-10. How it works — 4 steps
-11. Testimonials
-12. Latest blog posts
-13. Get Started — contact details + lead form (`POST /api/get-started`)
-14. Footer — about, Employers / Immigration / Company link columns, contact, legal
+`tools/clean-mirror.js` takes the `index.html` of a full WordPress export of the homepage and
+writes `views/index.ejs`. It keeps the markup, styles, fonts and images untouched and removes
+only what makes sense on a live WordPress install or slows the page down:
 
-Edit `data/site.js` to change any copy or link; templates need no changes.
+- Google Tag Manager / Analytics, Jetpack stats, GoDaddy tracking, Site Kit
+- WP Rocket delay-JS, lazy-load and preload scripts (images use native `loading="lazy"`)
+- WordPress emoji, oEmbed, RSS, REST discovery, pingback and shortlink tags
+- `<noscript>` image duplicates, speculation rules, template-preview code
+
+It also makes every asset path root-relative and points the Elementor runtime at this app
+so widget scripts, AJAX and REST calls stay on the same origin.
+
+To regenerate after the WordPress homepage changes, export it again and run:
+
+```bash
+node tools/clean-mirror.js path/to/export/index.html
+```
+
+## Routing
+
+| Path                                     | Handling                                                        |
+| ---------------------------------------- | --------------------------------------------------------------- |
+| `/`                                      | The homepage (server-rendered, gzip, short public cache)        |
+| `/wp-content/**`, `/external/**`         | Static assets from `public/` (1-year immutable cache in prod)   |
+| `/wp-content/**` not in `public/`        | Fetched once from WordPress, cached on disk, then served locally (Elementor widget chunks etc.) |
+| `/wp-admin/admin-ajax.php`, `/wp-json/*` | Proxied to WordPress (chat widget, Elementor, forms)            |
+| `/healthz`                               | JSON health check                                               |
+| anything else                            | 302 to the same path on WordPress                               |
 
 ## Why it's fast
 
-- No CSS/JS frameworks; one ~14 KB stylesheet and one ~4 KB script, both deferred/preloaded
-- Inline SVG icons and SVG illustrations — no icon fonts, no raster downloads
-- System font stack — no web-font requests
-- Gzip compression on every response, ETags and immutable 1-year caching for assets
-- Server-rendered HTML with EJS template caching in production
-- Lazy-loaded below-the-fold images, `fetchpriority="high"` on hero assets
-
-## Wiring the lead form
-
-`POST /api/get-started` currently validates the submission and logs it to stdout.
-Replace the `console.log` in `server.js` with your email provider or CRM call.
+- No WordPress/PHP on the request path: static HTML rendered by Node with template caching
+- No third-party tracking scripts, no WP Rocket runtime, no emoji/oEmbed scripts
+- Fonts, images, CSS and JS are self-hosted and served with ETags and 1-year immutable caching
+- Gzip compression on every response
+- Native lazy loading for below-the-fold images; hero assets load eagerly
 
 ## Deploying
 
 Any Node host works (Render, Railway, Fly.io, a VPS with PM2, Docker). Serve the Node app at
-the root of the domain and keep WordPress on its existing paths, or run Node on a sub-domain and
-point the WordPress homepage to it. Set `NODE_ENV=production` and `WP_BASE_URL`.
+the root of the domain and keep WordPress on its existing paths (or on an internal host set as
+`WP_BASE_URL`). Set `NODE_ENV=production`.

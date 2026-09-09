@@ -194,6 +194,12 @@ html = html.replace(/href=["']https:\/\/canxglobal\.com\/?["']/gi, 'href="/"');
 html = html.replace(/<link rel=["']canonical["'][^>]*>/i, '<link rel="canonical" href="<%= wpBaseUrl %>/">');
 // Same-origin WordPress endpoints are proxied by server.js; keep them relative.
 html = html.replace(/"ajax":\{"url":"\/wp-admin\/admin-ajax\.php"\}/, '"ajax":{"url":"/wp-admin/admin-ajax.php"}');
+// Elementor loads its widget handlers (webpack chunks) relative to urls.assets
+// and talks to admin-ajax / the REST API. Point all of those at this app so
+// server.js can serve them (cached) from the same origin.
+html = html.replace(/"assets":"https:\\\/\\\/canxglobal\.com\\\/(wp-content\\\/plugins\\\/[^"]+)"/g, '"assets":"\\/$1"');
+html = html.replace(/"ajaxurl":"https:\\\/\\\/canxglobal\.com\\\/wp-admin\\\/admin-ajax\.php"/g, '"ajaxurl":"\\/wp-admin\\/admin-ajax.php"');
+html = html.replace(/"rest":"https:\\\/\\\/canxglobal\.com\\\/wp-json\\\/"/g, '"rest":"\\/wp-json\\/"');
 
 /* ------------------------------------------------------------------ */
 /* 6. Tidy whitespace left behind                                      */

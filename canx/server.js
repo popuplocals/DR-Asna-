@@ -105,6 +105,67 @@ app.all(/^\/wp-json(\/.*)?$/, proxyToWordPress);
 app.all(/^\/\?jkit-ajax-request=.*/, proxyToWordPress);
 
 /* ------------------------------------------------------------------ */
+/* Plugin assets loaded on demand (Elementor webpack chunks, fonts…)   */
+/* ------------------------------------------------------------------ */
+
+// Anything under /wp-content or /wp-includes that is not part of the export is
+// fetched once from WordPress, stored in ASSET_CACHE_DIR and served from disk
+// from then on, so the page stays same-origin and fast.
+const fs = require('fs');
+const ASSET_CACHE_DIR = process.env.ASSET_CACHE_DIR || path.join(__dirname, '.asset-cache');
+fs.mkdirSync(ASSET_CACHE_DIR, { recursive: true });
+
+app.use(express.static(ASSET_CACHE_DIR, { maxAge: IS_PROD ? '365d' : 0, immutable: IS_PROD, index: false }));
+
+const inflight = new Map();
+function fetchAndCacheAsset(req, res, next) {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const pathname = decodeURIComponent(req.path);
+  if (pathname.includes('..')) return res.status(400).end();
+  const dest = path.join(ASSET_CACHE_DIR, pathname);
+  const target = new URL(req.originalUrl, WP_BASE_URL);
+  const client = target.protocol === 'http:' ? http : https;
+
+  const key = target.href;
+  const job =
+    inflight.get(key) ||
+    new Promise((resolve, reject) => {
+      const upstream = client.get(target, { headers: { 'user-agent': 'canx-node-homepage', accept: '*/*' }, timeout: 15000 }, (up) => {
+        if (up.statusCode !== 200) {
+          up.resume();
+          return resolve({ status: up.statusCode });
+        }
+        const chunks = [];
+        up.on('data', (c) => chunks.push(c));
+        up.on('end', () => {
+          const body = Buffer.concat(chunks);
+          fs.mkdir(path.dirname(dest), { recursive: true }, (err) => {
+            if (err) return resolve({ status: 200, body, type: up.headers['content-type'] });
+            fs.writeFile(dest, body, () => resolve({ status: 200, body, type: up.headers['content-type'] }));
+          });
+        });
+        up.on('error', reject);
+      });
+      upstream.on('timeout', () => upstream.destroy(new Error('upstream timeout')));
+      upstream.on('error', reject);
+    }).finally(() => inflight.delete(key));
+  inflight.set(key, job);
+
+  job
+    .then((r) => {
+      if (r.status !== 200) return next();
+      if (r.type) res.type(r.type);
+      res.setHeader('Cache-Control', IS_PROD ? 'public, max-age=31536000, immutable' : 'no-cache');
+      res.send(req.method === 'HEAD' ? undefined : r.body);
+    })
+    .catch((err) => {
+      console.error('[asset]', req.originalUrl, err.message);
+      next();
+    });
+}
+app.get([/^\/wp-content\/.+/, /^\/wp-includes\/.+/], fetchAndCacheAsset);
+
+/* ------------------------------------------------------------------ */
 /* Everything else lives on WordPress                                  */
 /* ------------------------------------------------------------------ */
 

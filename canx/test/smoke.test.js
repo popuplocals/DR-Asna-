@@ -27,8 +27,9 @@ function request(server, method, reqPath) {
     const home = await request(server, 'GET', '/');
     assert.strictEqual(home.status, 200, 'homepage should return 200');
     assert.ok(home.body.includes('Top Rated Recruitment &amp; Immigration Experts in Canada') || home.body.includes('Top Rated Recruitment & Immigration Experts in Canada'), 'hero headline present');
-    assert.ok(home.body.includes('Connecting Talent. Simplifying Immigration.'), 'hero subline present');
-    assert.ok(home.body.includes('Trusted by Clients from 30+ Countries'), 'testimonials heading present');
+    assert.ok(/Connecting\s*<[^>]*>\s*Talent/.test(home.body) && home.body.includes('Simplifying'), 'hero headline present');
+    assert.ok(home.body.includes('"assets":"\\/wp-content\\/plugins\\/elementor\\/assets\\/"'), 'elementor chunks load from this origin');
+    assert.ok(/Trusted by Clients from(<[^>]*>|\s)*30\+ Countries/.test(home.body), 'testimonials heading present');
     assert.ok(!home.body.includes('googletagmanager'), 'tag manager stripped');
     assert.ok(!home.body.includes('data-lazy-src'), 'rocket lazyload stripped');
 
